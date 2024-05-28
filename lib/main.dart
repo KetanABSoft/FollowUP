@@ -35,7 +35,7 @@ void main() async {
         {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: id == null ? const LoginScreen() : DashboardScreen(),
+            home: id == null ?  LoginScreen() : DashboardScreen(),
           );
         },
 

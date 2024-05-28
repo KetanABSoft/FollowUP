@@ -18,7 +18,6 @@ import 'TaskCompleted.dart';
 import 'TaskReceive.dart';
 import 'TaskSend.dart';
 import 'package:flutter/services.dart';
-
 import 'notification_services.dart';
 
 
@@ -271,7 +270,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           taskData[0] = TaskData(
             taskName: 'Task',
             taskValue: doubleValue1.isFinite ? doubleValue1 : 0,
-            taskColor: Colors.purple,
+            taskColor: Colors.grey,
           );
           taskData[1] = TaskData(
             taskName: 'Pending',
@@ -346,7 +345,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     TaskData(
       taskName: 'Task',
       taskValue: 0, // Use a placeholder or default value
-      taskColor: Colors.purple,
+      taskColor: Colors.grey,
     ),
     TaskData(
       taskName: 'Pending',
@@ -406,7 +405,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     'assets/Tasksend.png',
   ];
   final List<Color> colors = [
-    Colors.purple,
+    Colors.grey,
     Color.fromARGB(255, 77, 77, 174),
     Color.fromARGB(
       255, // Alpha component (fully opaque)
@@ -531,42 +530,21 @@ class _DashboardScreenState extends State<DashboardScreen>
     return WillPopScope(
       onWillPop: () => onWillPopnew(context),
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700), // Set app bar background color
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(
-                    30), // Add curved border radius to the bottom
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black
-                      .withOpacity(0.3), // Set shadow color and opacity
-                  blurRadius: 10, // Set the blur radius of the shadow
-                  offset: Offset(0, 2), // Set the offset of the shadow
-                ),
-              ],
-            ),
-            child: AppBar(
-              backgroundColor: Colors
-                  .transparent, // Set app bar background color to transparent
-              elevation: 0, // Remove app bar shadow
-              title: const Text(
-                'Task Management',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color:
-                      AppString.appgraycolor, // Set app bar text color to white
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              centerTitle: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xff8155BA), // Set app bar background color to transparent
+          elevation: 0, // Remove app bar shadow
+          title:  Text(
+            'Task Management',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,// Set app bar text color to white
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          centerTitle: true,
         ),
         body: Container(
           padding: EdgeInsets.all(16.0),
