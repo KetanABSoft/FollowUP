@@ -205,7 +205,8 @@ class _DashBoard extends State<DashBoard> {
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFFFFD700),
+              // backgroundColor: Color(0xff8155BA),
+              color: Color(0xff8155BA),
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(30),
               ),

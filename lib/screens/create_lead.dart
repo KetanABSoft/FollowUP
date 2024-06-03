@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:followup/constant/conurl.dart';
 import 'package:followup/screens/dashboard.dart';
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +13,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 import 'Lead_list.dart';
 
@@ -50,53 +54,76 @@ class _LeadFormState extends State<LeadForm> {
 
   void myAlert() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Please choose media to select',
-                style: TextStyle(fontFamily: 'Poppins')),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     _selectImageFromGallery();
-                  //     Navigator.pop(context);
-                  //   },
-                  //   child: Row(
-                  //     children: [
-                  //       Icon(Icons.image),
-                  //       Text('From Gallery'),
-                  //     ],
-                  //   ),
-                  // ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFD700),
-                    ),
-                    onPressed: () {
-                      _captureImage();
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.camera, color: AppString.appgraycolor),
-                        Text('From Camera',
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: AppString.appgraycolor)),
-                      ],
-                    ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          title: Text(
+            'Please choose media to select',
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          content: Container(
+            height: MediaQuery.of(context).size.height / 6,
+            child: Column(
+              children: [
+                SizedBox(height: 1.h,),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff8155BA),
                   ),
-                ],
-              ),
+                  onPressed: () {
+                    _captureImage();
+                    // Navigator.pop(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(Icons.camera, color: Colors.white),
+                      Text(
+                        'From Camera',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 2.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                      Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 4.h, // Assuming you want to specify height in logical pixels
+                        width: 20.w, // Assuming you want to specify width in logical pixels
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: const Color(0xff8155BA), // Use 'const' for color for better performance
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Back',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
+
 
   Future<void> _selectImageFromGallery() async {
     final picker = ImagePicker();
@@ -211,7 +238,7 @@ class _LeadFormState extends State<LeadForm> {
     }
     if (jsonResponse['result'] == "sucess") {
       Fluttertoast.showToast(
-        backgroundColor: const Color.fromARGB(255, 0, 255, 55),
+        backgroundColor: Color(0xff8155BA),
         textColor: Colors.white,
         msg: 'Lead Added Successfully.',
         toastLength: Toast.LENGTH_SHORT,
@@ -334,7 +361,7 @@ class _LeadFormState extends State<LeadForm> {
     }
     if (jsondata['result'] == "sucess") {
       Fluttertoast.showToast(
-        backgroundColor: const Color.fromARGB(255, 0, 255, 55),
+        backgroundColor: Color(0xff8155BA),
         textColor: Colors.white,
         msg: 'Lead Updated Successfully.',
         toastLength: Toast.LENGTH_SHORT,
@@ -360,325 +387,455 @@ class _LeadFormState extends State<LeadForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700), // Set app bar background color
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(
-                    30), // Add curved border radius to the bottom
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10, // Set the blur radius of the shadow
-                  offset: Offset(0, 2), // Set the offset of the shadow
-                ),
-              ],
+        appBar: AppBar(
+          backgroundColor: Color(0xff8155BA),
+          elevation: 0,
+          title:  Text(
+            'Create Lead',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors
-                  .transparent, // Set app bar background color to transparent
-              elevation: 0, // Remove app bar shadow
-
-              title: Text(
-                //'Create lead',
-                widget.task == 'view'
-                    ? 'View Lead'
-                    : (widget.task == 'edit' ? 'Edit Lead' : 'Create Lead'),
-
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color:
-                      AppString.appgraycolor, // Set app bar text color to white
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color:Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
                 ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-                onPressed: () {
-                  widget.task != ''
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LeadList(),
-                          ),
-                        )
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DashboardScreen(),
-                          ),
-                        );
-                },
-              ),
-            ),
+              );
+            },
           ),
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 5,
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: CustomerName,
-                              decoration: const InputDecoration(
-                                labelText: 'Customer Name',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(
-                                    r'[a-zA-Z ]')), // Allow letters and spaces
-                              ],
-                             
+              padding:  EdgeInsets.all(12.0.sp),
+              child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 1.h,),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: CustomerName,
+                          decoration: const InputDecoration(
+                            labelText: 'Customer Name',
+                            helperText: "",
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
                             ),
-                            TextFormField(
-                              controller: CompanyName,
-                              decoration: const InputDecoration(
-                                labelText: 'Company Name',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Company Name is required';
-                                }
-                                return null;
-                              },
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
                             ),
-                            TextFormField(
-                              controller: ContactNo,
-                              decoration: const InputDecoration(
-                                labelText: 'Contact number',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'[0-9]')), // Allow only numbers
-                                LengthLimitingTextInputFormatter(
-                                    10), // Limit the length to 10 characters
-                              ],
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Contact number is required';
-                                }
-                                if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                                  return 'Invalid contact number format';
-                                }
-                                return null;
-                              },
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
                             ),
-                            TextFormField(
-                              controller: MailId,
-                              decoration: const InputDecoration(
-                                labelText: 'Mail Id',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                             
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
                             ),
-                            TextFormField(
-                              controller: Website,
-                              decoration: const InputDecoration(
-                                labelText: 'Website',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              controller: Description,
-                              maxLines: 3,
-                              decoration: const InputDecoration(
-                                labelText: 'Description',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              controller: OwnerName,
-                              decoration: const InputDecoration(
-                                labelText: 'Owner name',
-                                labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue),
-                                ),
-                              ),
-                              
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            //(_selectedImage != null)
-                            _buildSelectedImage(),
-                            // : SizedBox(
-                            //     height: 10,
-                            //   ),
-                            if (widget.task != 'view')
-                              ElevatedButton(
-                                onPressed: () {
-                                  myAlert();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFFFD700),
-                                ),
-                                child: Text('Upload Photo',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      color: AppString.appgraycolor,
-                                    )),
-                              ),
+                          ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(
+                                r'[a-zA-Z ]')), // Allow letters and spaces
+                          ],
 
-                            if (widget.task != 'view')
-                              (Row(
-                                children: [
-                                  Expanded(
-                                    child: (widget.id != '0')
-                                        ? ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFFFD700),
-                                            ),
-                                            child: Text(
-                                              'Update',
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                color: AppString.appgraycolor,
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              if (formKey.currentState!
-                                                  .validate()) {
-                                                updatelead(
-                                                  CustomerName.text,
-                                                  CompanyName.text,
-                                                  ContactNo.text,
-                                                  MailId.text,
-                                                  Website.text,
-                                                  Description.text,
-                                                  OwnerName.text,
-                                                );
-                                              }
-                                            },
-                                          )
-                                        : ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFFFD700),
-                                            ),
-                                            child: Text('Save',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    color: AppString
-                                                        .appgraycolor)),
-                                            onPressed: () {
-                                              if (formKey.currentState!
-                                                  .validate()) {
-                                                savelead(
-                                                    CustomerName.text,
-                                                    CompanyName.text,
-                                                    ContactNo.text,
-                                                    MailId.text,
-                                                    Website.text,
-                                                    Description.text,
-                                                    OwnerName.text);
-                                              }
-                                            }),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16), // You can adjust the spacing between buttons
-                                  Expanded(
-                                    child: ElevatedButton(
+                        ),
+                      ),
+                      SizedBox(height: 1.h,),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: CompanyName,
+                          decoration: const InputDecoration(
+                            labelText: 'Company Name',
+                            helperText:'',
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Company Name is required';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 1.h,),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: ContactNo,
+                          decoration: const InputDecoration(
+                            labelText: 'Contact number',
+                            helperText: "",
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9]')), // Allow only numbers
+                            LengthLimitingTextInputFormatter(
+                                10), // Limit the length to 10 characters
+                          ],
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Contact number is required';
+                            }
+                            if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                              return 'Invalid contact number format';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: MailId,
+                          decoration: const InputDecoration(
+                            labelText: 'Mail Id',
+                            helperText: "",
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: Website,
+                          decoration: const InputDecoration(
+                            labelText: 'Website',
+                            helperText: "",
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Container(
+                        height: 12.5.h,
+                        child: TextFormField(
+                          controller: Description,
+                          maxLines: 5,
+                          decoration: const InputDecoration(
+                            labelText: 'Description',
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Container(
+                        height: 8.5.h,
+                        child: TextFormField(
+                          controller: OwnerName,
+                          decoration: const InputDecoration(
+                            labelText: 'Owner name',
+                            helperText: "",
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight:  Radius.circular(7),
+                                  bottomLeft:  Radius.circular(7),
+                                  bottomRight:  Radius.circular(7),
+                                )
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      // SizedBox(
+                      //   height: 3.h,
+                      // ),
+                      //(_selectedImage != null)
+                      _buildSelectedImage(),
+                      // : SizedBox(
+                      //     height: 10,
+                      //   ),
+                      if (widget.task != 'view')
+                        ElevatedButton(
+                          onPressed: () {
+                            myAlert();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff8155BA)
+                          ),
+                          child: Text('Upload Photo',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                              )),
+                        ),
+                      SizedBox(height: 2.h,),
+                      if (widget.task != 'view')
+                        (
+                            Row(
+                          children: [
+                            Expanded(
+                              child: (widget.id != '0')
+                                  ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFFFFD700),
+                                        backgroundColor:
+                                        Color(0xff8155BA)
                                       ),
                                       child: Text(
-                                        'Show list',
+                                        'Update',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: AppString.appgraycolor,
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => LeadList()),
-                                        );
-                                        setState(() {
-                                          _selectedImage = null;
-                                          imageUrl = null;
-                                        });
+                                        if (formKey.currentState!
+                                            .validate()) {
+                                          updatelead(
+                                            CustomerName.text,
+                                            CompanyName.text,
+                                            ContactNo.text,
+                                            MailId.text,
+                                            Website.text,
+                                            Description.text,
+                                            OwnerName.text,
+                                          );
+                                        }
                                       },
-                                    ),
+                                    )
+                                  : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                        Color(0xff8155BA)
+                                      ),
+                                      child: Text('Save',
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.white
+                                          )),
+                                      onPressed: () {
+                                        if (formKey.currentState!
+                                            .validate()) {
+                                          savelead(
+                                              CustomerName.text,
+                                              CompanyName.text,
+                                              ContactNo.text,
+                                              MailId.text,
+                                              Website.text,
+                                              Description.text,
+                                              OwnerName.text);
+                                        }
+                                      }),
+                            ),
+                            SizedBox(
+                                width:
+                                    6.w
+                            ), // You can adjust the spacing between buttons
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:Color(0xff8155BA)
+                                ),
+                                child: Text(
+                                  'Show list',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color:Colors.white
                                   ),
-                                ],
-                              ))
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LeadList()),
+                                  );
+                                  setState(() {
+                                    _selectedImage = null;
+                                    imageUrl = null;
+                                  });
+                                },
+                              ),
+                            ),
                           ],
-                        )))),
-          ),
+                        )
+                        )
+                    ],
+                  ))),
         ));
   }
 }

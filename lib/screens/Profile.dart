@@ -7,6 +7,7 @@ import 'package:followup/screens/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:sizer/sizer.dart';
 import 'login_screen.dart';
 import 'loginscreen.dart';
 
@@ -297,217 +298,200 @@ class _Profile extends State<Profile> {
       //   backgroundColor: Color(0xFFFFD700),
       // ),
 
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFD700),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(0, 2),
-              ),
-            ],
+      appBar: AppBar(
+        backgroundColor: Color(0xff8155BA),
+        elevation: 0,
+        title:  Text(
+          'Profile',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
           ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Profile',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: AppString.appgraycolor,
-                fontSize: 20,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DashboardScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+
+            Navigator.pop(context);
+
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => DashboardScreen(),
+            //   ),
+            // );
+            //Get.to(DashboardScreen());
+
+          },
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20), // Add padding here
-
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FutureBuilder<String?>(
-                  future: _imageUrlFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error fetching image');
-                    } else {
-                      final imageUrl = snapshot.data;
-
-                      return CircleAvatar(
-                        radius: 120,
-                        backgroundImage: NetworkImage('$imageUrl'),
+          padding:  EdgeInsets.all(11.sp),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FutureBuilder<String?>(
+                future: _imageUrlFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error fetching image');
+                  } else {
+                    final imageUrl = snapshot.data;
+                    return CircleAvatar(
+                      radius: 90.sp,
+                      backgroundImage: NetworkImage('$imageUrl'),
+                    );
+                  }
+                },
+              ),
+               SizedBox(height: 3.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xff8155BA),
+                    ),
+                    onPressed: selectAndUploadImage,
+                    child: const Text('Change Profile Image',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.white)),
+                  ),
+                   SizedBox(width: 8.w),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xff8155BA),
+                    ),
+                    onPressed: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          content: const Text('Are You Sure to Logout?',
+                              style: TextStyle(fontFamily: 'Poppins')),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel',
+                                  style: TextStyle(fontFamily: 'Poppins')),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                logout(context);
+                                Navigator.pop(context, 'true');
+                              },
+                              child: const Text('OK',
+                                  style: TextStyle(fontFamily: 'Poppins')),
+                            ),
+                          ],
+                        ),
                       );
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFD700),
-                      ),
-                      onPressed: selectAndUploadImage,
-                      child: const Text('Change Profile Image',
-                          style: TextStyle(
+                    },
+                    child: const Text('Log Out',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.white)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Card(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'New Password',
+                            labelStyle: TextStyle(
                               fontFamily: 'Poppins',
-                              color: AppString.appgraycolor)),
-                    ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFD700),
-                      ),
-                      onPressed: () {
-                        showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            content: const Text('Are You Sure to Logout?',
-                                style: TextStyle(fontFamily: 'Poppins')),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel',
-                                    style: TextStyle(fontFamily: 'Poppins')),
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              child: Icon(
+                                _obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  logout(context);
-                                  Navigator.pop(context, 'true');
-                                },
-                                child: const Text('OK',
-                                    style: TextStyle(fontFamily: 'Poppins')),
-                              ),
-                            ],
+                            ),
                           ),
-                        );
-                      },
-                      child: const Text('Log Out',
-                          style: TextStyle(
+                          obscureText: _obscureText,
+                          controller: _newPasswordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a new password';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Confirm Password',
+                            labelStyle: TextStyle(
                               fontFamily: 'Poppins',
-                              color: AppString.appgraycolor)),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'New Password',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                child: Icon(
-                                  _obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureTextConfirm = !_obscureTextConfirm;
+                                });
+                              },
+                              child: Icon(
+                                _obscureTextConfirm
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
                               ),
                             ),
-                            obscureText: _obscureText,
-                            controller: _newPasswordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a new password';
-                              }
-                              return null;
-                            },
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obscureTextConfirm = !_obscureTextConfirm;
-                                  });
-                                },
-                                child: Icon(
-                                  _obscureTextConfirm
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            obscureText: _obscureTextConfirm,
-                            controller: _confirmPasswordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please confirm the password';
-                              } else if (value != _newPasswordController.text) {
-                                return 'Passwords do not match';
-                              }
-                              return null;
-                            },
+                          obscureText: _obscureTextConfirm,
+                          controller: _confirmPasswordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please confirm the password';
+                            } else if (value != _newPasswordController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff8155BA),
                           ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFFD700),
-                            ),
-                            onPressed: () {
-                              submitForm(_newPasswordController.text,
-                                  _confirmPasswordController.text);
-                            },
-                            child: const Text('Save',
-                                style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: AppString.appgraycolor)),
-                          ),
-                        ],
-                      ),
+                          onPressed: () {
+                            submitForm(_newPasswordController.text,
+                                _confirmPasswordController.text);
+                          },
+                          child: const Text('Save',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white)),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

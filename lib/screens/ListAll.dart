@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:followup/constant/conurl.dart';
+import 'package:sizer/sizer.dart';
 import 'dashboard.dart';
 import 'dart:convert';
 
@@ -216,51 +217,32 @@ class _DashBoard extends State<DashBoard> {
         return true;
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
+        appBar: AppBar(
+          backgroundColor: Color(0xff8155BA),
+          elevation: 0,
+          title:  Text(
+            'Total Task',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Total Task',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: AppString.appgraycolor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: AppString.appgraycolor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DashboardScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color:Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => DashboardScreen(),
+              //   ),
+              // );
+              //Get.to(DashboardScreen());
+            },
           ),
         ),
         body: Stack(
@@ -600,7 +582,9 @@ class _DashBoard extends State<DashBoard> {
                                             },
                                           );
                                         }
-                                      } else {}
+                                      } else {
+
+                                      }
                                     },
                                   ),
                                 ),

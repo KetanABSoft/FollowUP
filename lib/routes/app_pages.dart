@@ -24,7 +24,7 @@ import '../screens/viewNotification.dart';
 
 class AppPages
 {
-  static String INITIAL_ROUTE = Route.LOGIN_SCREEN_ROUTE;
+  static String INITIAL_ROUTE = Route.PROFILE_ROUTE;
 
   static final Pages =
   [

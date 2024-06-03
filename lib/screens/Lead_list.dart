@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class LeadList extends StatefulWidget {
   const LeadList({super.key});
@@ -104,12 +105,12 @@ class _LeadListState extends State<LeadList> {
             actions: <Widget>[
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFFD700),
+                  backgroundColor: Color(0xff8155BA),
                 ),
                 child: Text("Cancel",
                     style: TextStyle(
                       fontFamily: 'Poppins',
-                      color: AppString.appgraycolor,
+                      color: Colors.white,
                     )),
                 onPressed: () {
                   Navigator.of(context)
@@ -118,12 +119,12 @@ class _LeadListState extends State<LeadList> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFFD700),
+                  backgroundColor: Color(0xff8155BA),
                 ),
                 child: Text("Delete",
                     style: TextStyle(
                       fontFamily: 'Poppins',
-                      color: AppString.appgraycolor,
+                      color: Colors.white,
                     )),
                 onPressed: () {
                   Navigator.of(context)
@@ -144,7 +145,7 @@ class _LeadListState extends State<LeadList> {
 
       if (jsondata['success'] == "success") {
         Fluttertoast.showToast(
-          backgroundColor: Color.fromARGB(255, 0, 255, 55),
+          backgroundColor: Color(0xff8155BA),
           textColor: Colors.white,
           msg: jsondata['message'],
           toastLength: Toast.LENGTH_SHORT,
@@ -159,48 +160,32 @@ class _LeadListState extends State<LeadList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
+        appBar: AppBar(
+          backgroundColor: Color(0xff8155BA),
+          elevation: 0,
+          title:  Text(
+            'Lead List',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Lead List',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: AppString.appgraycolor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LeadForm(id: '0', task: ''),
-                    ),
-                  );
-                },
-              ),
-            ),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color:Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => DashboardScreen(),
+              //   ),
+              // );
+              //Get.to(DashboardScreen());
+            },
           ),
         ),
         body: Builder(builder: (BuildContext context) {
@@ -223,7 +208,7 @@ class _LeadListState extends State<LeadList> {
                       itemCount: leads.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.all(8.0.sp),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -244,16 +229,16 @@ class _LeadListState extends State<LeadList> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: 45,
-                                    color: Color.fromARGB(255, 77, 77, 174),
+                                    height: 5.h,
+                                    color:Color(0xff8155BA),
                                     padding: EdgeInsets.only(
-                                        top: 1, left: 10, bottom: 2),
+                                        top: 1.sp, left: 10.sp, bottom: 2.sp),
                                     child: Row(
                                       children: [
                                         Text(
                                           '${leads[index].customer_name ?? ''}',
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 12.sp,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           ),
@@ -289,7 +274,6 @@ class _LeadListState extends State<LeadList> {
                                           },
                                           color: Colors.white,
                                         ),
-
                                         IconButton(
                                           icon: Icon(Icons.delete),
                                           onPressed: () {
@@ -304,7 +288,7 @@ class _LeadListState extends State<LeadList> {
                                   Opacity(
                                     opacity: 1,
                                     child: Padding(
-                                      padding: EdgeInsets.all(16.0),
+                                      padding: EdgeInsets.all(12.0.sp),
                                       child: Column(children: [
                                         Row(
                                           children: [
@@ -317,7 +301,7 @@ class _LeadListState extends State<LeadList> {
                                                   Text(
                                                     '${leads[index].company_name ?? ''}',
                                                     style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 11.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -333,7 +317,7 @@ class _LeadListState extends State<LeadList> {
                                                 Text(
                                                   '${leads[index].mobile ?? ''}',
                                                   style: TextStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 11.sp,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -352,7 +336,7 @@ class _LeadListState extends State<LeadList> {
                                                   Text(
                                                     '${leads[index].mail ?? ''}',
                                                     style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 11.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -368,7 +352,7 @@ class _LeadListState extends State<LeadList> {
                                                 Text(
                                                   '${leads[index].date ?? ''}',
                                                   style: TextStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 11.sp,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),

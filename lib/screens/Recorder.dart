@@ -1,16 +1,21 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:followup/screens/AddTask.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:record_mp3/record_mp3.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:followup/constant/conurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+
+import 'dashboard.dart';
 
 String? title;
 String? startdate;
@@ -136,52 +141,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor:Colors.white,
       // appBar: AppBar(title: Text('Audio Recording and Playing')),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFD700),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(0, 2),
-              ),
-            ],
+      appBar: AppBar(
+        backgroundColor: Color(0xff8155BA),
+        elevation: 0,
+        title:  Text(
+          'Record Audio',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
           ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Record Audio',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: AppString.appgraycolor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TaskForm(
-                      audioPath: "",
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => DashboardScreen(),
+            //   ),
+            // );
+            //Get.to(DashboardScreen());
+          },
         ),
       ),
       body: Center(
@@ -189,48 +176,96 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 40,
+              height: 10.h,
             ),
             Container(
               child: Center(
                 child: Text(
                   _getFormattedTime(),
-                  style: TextStyle(fontSize: 70, color: Colors.red),
+                  style: TextStyle(fontSize: 50.sp, color: Colors.red),
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 3.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                createElevatedButton(
-                  icon: Icons.mic,
-                  iconColor: Colors.red,
-                  onPressFunc: () async {
+                // createElevatedButton(
+                //   icon: Icons.mic,
+                //   iconColor: Colors.red,
+                //   onPressFunc: () async {
+                //     startRecord();
+                //   },
+                // ),
+                
+                GestureDetector(
+                  onTap: (){
                     startRecord();
                   },
+                  child: Container(
+                    height: 6.h,
+                    width: 24.w,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.deepPurple,width: 2),
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Icon(Icons.mic,size: 25.sp,color: Colors.red,),
+                  ),
                 ),
                 SizedBox(
-                  width: 30,
+                  width: 12.w,
                 ),
-                createElevatedButton(
-                    icon: Icons.stop,
-                    iconColor: Colors.red,
-                    onPressFunc: () {
-                      stopRecord();
-                    }),
+                // createElevatedButton(
+                //     icon: Icons.stop,
+                //     iconColor: Colors.red,
+                //     onPressFunc: () {
+                //       stopRecord();
+                //     }),
+
+                GestureDetector(
+                  onTap: (){
+                    stopRecord();
+                  },
+                  child: Container(
+                    height: 6.h,
+                    width: 24.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.deepPurple,width: 2),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Icon(Icons.stop,size: 25.sp,color: Colors.red,),
+                  ),
+                ),
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 5.h,
             ),
-            ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(elevation: 9.0, backgroundColor: Colors.red),
-              child: Text('Upload', style: TextStyle(fontFamily: 'Poppins')),
-              onPressed: () {
+            // ElevatedButton(
+            //   style:
+            //       ElevatedButton.styleFrom(elevation: 11.0,    backgroundColor: Color(0xff8155BA),),
+            //   child: Text('Upload', style: TextStyle(
+            //       fontFamily: 'Poppins',color: Colors.white)),
+            //   onPressed: () {
+            //     stopRecord();
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => TaskForm(
+            //           audioPath: recordFilePath,
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
+
+
+            GestureDetector(
+              onTap: (){
                 stopRecord();
                 Navigator.push(
                   context,
@@ -241,7 +276,18 @@ class _MyAppState extends State<MyApp> {
                   ),
                 );
               },
+              child: Container(
+                height: 6.h,
+                width: 30.w,
+                decoration: BoxDecoration(
+                    color: Color(0xff8155BA),
+                    // border: Border.all(color: Colors.red,width: 2),
+                    borderRadius: BorderRadius.circular(15)
+                ),
+                child: Center(child: Text("Upload",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 18.sp),)),
+              ),
             ),
+
           ],
         ),
       ),
