@@ -532,7 +532,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xff8155BA), // Set app bar background color to transparent
+          backgroundColor:  Color(0xff7c81dd), // Set app bar background color to transparent
           elevation: 0, // Remove app bar shadow
           title:  Text(
             'Task Management',
@@ -607,15 +607,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 break;
                               case 2:
                                 handleoverduetask();
-
                               case 3:
                                 _handleCard2Tap();
-
                                 break;
                               case 4:
                                 _handleCard4Tap();
                                 break;
-
                               case 5:
                                 _handleCard3Tap();
                                 break;

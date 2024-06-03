@@ -124,24 +124,15 @@ class CustomeListOverdue extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: status == 'complete'
-                      ? Color(0xFFC9CC3F)
+                      ?Colors.green.withOpacity(0.1)
                       : status == 'pending'
                           ? Colors.amber
                           : status == 'Overdue'
-                              ? Color.fromARGB(
-                                  255, // Alpha component (fully opaque)
-                                  194, // Red component
-                                  24, // Green component
-                                  7, // Blue component
-                                )
+                              ?
+                  Colors.red.withOpacity(0.9)
                               :
                               // Color(0xFF00CED1),
-                              Color.fromARGB(
-                                  255, // Alpha component (fully opaque)
-                                  194, // Red component
-                                  24, // Green component
-                                  7, // Blue component
-                                ),
+            Colors.red.withOpacity(0.9),
                   borderRadius: BorderRadius.only(
                     topLeft:
                         Radius.circular(10.0), // Adjust the radii as needed
@@ -159,18 +150,8 @@ class CustomeListOverdue extends StatelessWidget {
                             : status == 'Overdue'
                                 // ? Color(0xFF00CED1)
                                 // : Color(0xFF00CED1),
-                                ? Color.fromARGB(
-                                    255, // Alpha component (fully opaque)
-                                    194, // Red component
-                                    24, // Green component
-                                    7, // Blue component
-                                  )
-                                : Color.fromARGB(
-                                    255, // Alpha component (fully opaque)
-                                    194, // Red component
-                                    24, // Green component
-                                    7, // Blue component
-                                  ),
+                                ? Colors.red.withOpacity(0.1)
+                                :  Colors.red.withOpacity(0.1),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

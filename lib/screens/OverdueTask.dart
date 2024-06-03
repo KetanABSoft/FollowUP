@@ -7,6 +7,7 @@ import 'package:followup/widgets/CustomeListOverdue.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 import 'dashboard.dart';
 
 String? timer;
@@ -195,48 +196,31 @@ class _OverdueTask extends State<OverdueTask> {
         return true;
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
+        appBar: AppBar(
+          // backgroundColor: Color(0xff8155BA),
+          backgroundColor: Color(0xff7c81dd),
+          elevation: 0,
+          title: Text(
+            'Task Overdue',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Task Overdue',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: AppString.appgraycolor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
                 ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DashboardScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
+              );
+            },
           ),
         ),
         body: Stack(
@@ -247,358 +231,421 @@ class _OverdueTask extends State<OverdueTask> {
                 child: Column(
                   children: [
                     adminType == 'admin'
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        decoration: const InputDecoration(
-                                          icon: Icon(Icons.date_range),
-                                          labelText: 'Start Date',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.grey,
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.blue),
-                                          ),
-                                        ),
-                                        controller: fromDateController,
-                                        readOnly: true,
-                                        onTap: () async {
-                                          final pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: fromDate,
-                                            firstDate: DateTime(1950),
-                                            lastDate: DateTime(2100),
-                                          );
-
-                                          if (pickedDate != null) {
-                                            setState(() {
-                                              fromDate = pickedDate;
-                                              fromDateController.text =
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(fromDate);
-                                            });
-                                          }
-                                        },
-                                      ),
+                        ?
+                    Padding(
+                      padding: EdgeInsets.all(8.0.sp),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(Icons.date_range),
+                                    labelText: 'Start Date',
+                                    labelStyle: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.grey,
                                     ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        decoration: const InputDecoration(
-                                          icon: Icon(Icons.date_range),
-                                          labelText: 'To Date',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.grey,
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.blue),
-                                          ),
-                                        ),
-                                        controller: toDateController,
-                                        readOnly: true,
-                                        onTap: () async {
-                                          final pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: toDate,
-                                            firstDate: DateTime(1950),
-                                            lastDate: DateTime(2100),
-                                          );
-
-                                          // if (pickedDate != null) {
-                                          //     setState(() {
-                                          //       toDate = pickedDate;
-                                          //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
-                                          //     });
-                                          //   }
-
-                                          if (pickedDate != null) {
-                                            // Check if pickedDate is after the current date
-
-                                            // Extract date components without time
-                                            DateTime currentDateWithoutTime =
-                                                DateTime(
-                                                    DateTime.now().year,
-                                                    DateTime.now().month,
-                                                    DateTime.now().day);
-                                            DateTime pickedDateWithoutTime =
-                                                DateTime(
-                                                    pickedDate.year,
-                                                    pickedDate.month,
-                                                    pickedDate.day);
-
-                                            if (pickedDateWithoutTime.isAfter(
-                                                    currentDateWithoutTime) ||
-                                                pickedDateWithoutTime
-                                                    .isAtSameMomentAs(
-                                                        currentDateWithoutTime)) {
-                                              //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-                                              setState(() {
-                                                String formattedDate =
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(pickedDate);
-                                                toDateController.text =
-                                                    formattedDate;
-                                              });
-                                            } else {
-                                              // Display an error message or take appropriate action
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: Text('Invalid Date',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Poppins')),
-                                                    content: Text(
-                                                        'Please select the correct date.',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Poppins')),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text('OK',
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    'Poppins')),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            }
-                                          } else {}
-                                        },
-                                      ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey),
                                     ),
-                                    SizedBox(width: 10),
-                                  ],
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.blue),
+                                    ),
+                                  ),
+                                  controller: fromDateController,
+                                  readOnly: true,
+                                  onTap: () async {
+                                    final pickedDate =
+                                    await showDatePicker(
+                                      context: context,
+                                      initialDate: fromDate,
+                                      firstDate: DateTime(1950),
+                                      lastDate: DateTime(2100),
+                                    );
+
+                                    if (pickedDate != null) {
+                                      setState(() {
+                                        fromDate = pickedDate;
+                                        fromDateController.text =
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(fromDate);
+                                      });
+                                    }
+                                  },
                                 ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: DropdownSearch<String>(
-                                        items: stateType,
-                                        onChanged: (String? value) {
-                                          if (value != null) {
-                                            int selectedIndex =
-                                                stateType.indexOf(value);
-                                            selectedId =
-                                                stateTypeid[selectedIndex];
-                                            // Use selectedId and value as needed
-                                            setState(() {
-                                              selectedValue = value;
-                                            });
-                                          }
-                                        },
-                                        selectedItem: selectedValue,
-                                      ),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(Icons.date_range),
+                                    labelText: 'To Date',
+                                    labelStyle: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.grey,
                                     ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          List<Data> dataList = await fetchData(
-                                            fromDate: fromDate,
-                                            toDate: toDate,
-                                            selectedValue: selectedId,
-                                          );
-                                          setState(() {
-                                            // Update the state with the new data
-                                            data = dataList;
-                                          });
-                                        },
-                                        child: Text('Search',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                      ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey),
                                     ),
-                                    SizedBox(width: 10),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: Icon(Icons.date_range),
-                                      labelText: 'Start Date',
-                                      labelStyle: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.grey,
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                      ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.blue),
                                     ),
-                                    controller: fromDateController,
-                                    readOnly: true,
-                                    onTap: () async {
-                                      final pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: fromDate,
-                                        firstDate: DateTime(1950),
-                                        lastDate: DateTime(2100),
-                                      );
+                                  ),
+                                  controller: toDateController,
+                                  readOnly: true,
+                                  onTap: () async {
+                                    final pickedDate =
+                                    await showDatePicker(
+                                      context: context,
+                                      initialDate: toDate,
+                                      firstDate: DateTime(1950),
+                                      lastDate: DateTime(2100),
+                                    );
 
-                                      if (pickedDate != null) {
+                                    // if (pickedDate != null) {
+                                    //     setState(() {
+                                    //       toDate = pickedDate;
+                                    //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
+                                    //     });
+                                    //   }
+
+                                    if (pickedDate != null) {
+                                      // Check if pickedDate is after the current date
+
+                                      // Extract date components without time
+                                      DateTime currentDateWithoutTime =
+                                      DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day);
+                                      DateTime pickedDateWithoutTime =
+                                      DateTime(
+                                          pickedDate.year,
+                                          pickedDate.month,
+                                          pickedDate.day);
+
+                                      if (pickedDateWithoutTime.isAfter(
+                                          currentDateWithoutTime) ||
+                                          pickedDateWithoutTime
+                                              .isAtSameMomentAs(
+                                              currentDateWithoutTime)) {
+                                        //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                         setState(() {
-                                          fromDate = pickedDate;
-                                          fromDateController.text =
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(fromDate);
+                                          String formattedDate =
+                                          DateFormat('dd-MM-yyyy')
+                                              .format(pickedDate);
+                                          toDateController.text =
+                                              formattedDate;
                                         });
+                                      } else {
+                                        // Display an error message or take appropriate action
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text('Invalid Date',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      'Poppins')),
+                                              content: Text(
+                                                  'Please select the correct date.',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      'Poppins')),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context);
+                                                  },
+                                                  child: Text('OK',
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                          'Poppins')),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       }
-                                    },
-                                  ),
+                                    } else {}
+                                  },
                                 ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: Icon(Icons.date_range),
-                                      labelText: 'To Date',
-                                      labelStyle: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.grey,
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                      ),
-                                    ),
-                                    controller: toDateController,
-                                    readOnly: true,
-                                    onTap: () async {
-                                      final pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: toDate,
-                                        firstDate: DateTime(1950),
-                                        lastDate: DateTime(2100),
-                                      );
-
-                                      // if (pickedDate != null) {
-                                      //     setState(() {
-                                      //       toDate = pickedDate;
-                                      //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
-                                      //     });
-                                      //   }
-
-                                      if (pickedDate != null) {
-                                        // Check if pickedDate is after the current date
-
-                                        // Extract date components without time
-                                        DateTime currentDateWithoutTime =
-                                            DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day);
-                                        DateTime pickedDateWithoutTime =
-                                            DateTime(
-                                                pickedDate.year,
-                                                pickedDate.month,
-                                                pickedDate.day);
-
-                                        if (pickedDateWithoutTime.isAfter(
-                                                currentDateWithoutTime) ||
-                                            pickedDateWithoutTime
-                                                .isAtSameMomentAs(
-                                                    currentDateWithoutTime)) {
-                                          //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-                                          setState(() {
-                                            String formattedDate =
-                                                DateFormat('dd-MM-yyyy')
-                                                    .format(pickedDate);
-                                            toDateController.text =
-                                                formattedDate;
-                                          });
-                                        } else {
-                                          // Display an error message or take appropriate action
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: Text('Invalid Date',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Poppins')),
-                                                content: Text(
-                                                    'Please select the correct date.',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Poppins')),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text('OK',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Poppins')),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
-                                      } else {}
-                                    },
-                                  ),
+                              ),
+                              SizedBox(width: 3.w),
+                            ],
+                          ),
+                          SizedBox(height: 3.w),
+                          Row(
+                            children: [
+                              SizedBox(width: 3.w),
+                              Expanded(
+                                child: DropdownSearch<String>(
+                                  items: stateType,
+                                  onChanged: (String? value) {
+                                    if (value != null) {
+                                      int selectedIndex =
+                                      stateType.indexOf(value);
+                                      selectedId =
+                                      stateTypeid[selectedIndex];
+                                      // Use selectedId and value as needed
+                                      setState(() {
+                                        selectedValue = value;
+                                      });
+                                    }
+                                  },
+                                  selectedItem: selectedValue,
                                 ),
-                                ElevatedButton(
+                              ),
+                              Expanded(
+                                child: ElevatedButton(
                                   onPressed: () async {
                                     List<Data> dataList = await fetchData(
-                                        fromDate: fromDate,
-                                        toDate: toDate,
-                                        selectedValue: selectedId);
+                                      fromDate: fromDate,
+                                      toDate: toDate,
+                                      selectedValue: selectedId,
+                                    );
                                     setState(() {
                                       // Update the state with the new data
                                       data = dataList;
                                     });
                                   },
                                   child: Text('Search',
-                                      style: TextStyle(fontFamily: 'Poppins')),
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins')),
                                 ),
-                              ],
+                              ),
+                              SizedBox(width: 10),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                        :
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 18.sp, left: 12.sp, right: 12.sp),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 5.5.h,
+                              width: 42.w,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  icon: Icon(
+                                    Icons.date_range,
+                                    size: 20.sp,
+                                  ),
+                                  labelText: 'Start Date',
+                                  labelStyle: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                ),
+                                controller: fromDateController,
+                                readOnly: true,
+                                onTap: () async {
+                                  final pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: fromDate,
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime(2100),
+                                  );
+                                  if (pickedDate != null) {
+                                    setState(() {
+                                      fromDate = pickedDate;
+                                      fromDateController.text =
+                                          DateFormat('dd-MM-yyyy')
+                                              .format(fromDate);
+                                    });
+                                  }
+                                },
+                              ),
                             ),
                           ),
+                          SizedBox(width: 2.5.w),
+                          Expanded(
+                            child: Container(
+                              height: 5.5.h,
+                              width: 42.w,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  icon: Icon(
+                                    Icons.date_range,
+                                    size: 20.sp,
+                                  ),
+                                  labelText: 'To Date',
+                                  labelStyle: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(7),
+                                        topRight: Radius.circular(7),
+                                        bottomLeft: Radius.circular(7),
+                                        bottomRight: Radius.circular(7),
+                                      )),
+                                ),
+                                controller: toDateController,
+                                readOnly: true,
+                                onTap: () async {
+                                  final pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: toDate,
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  // if (pickedDate != null) {
+                                  //     setState(() {
+                                  //       toDate = pickedDate;
+                                  //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
+                                  //     });
+                                  //   }
+
+                                  if (pickedDate != null) {
+                                    // Check if pickedDate is after the current date
+
+                                    // Extract date components without time
+                                    DateTime currentDateWithoutTime =
+                                    DateTime(
+                                        DateTime.now().year,
+                                        DateTime.now().month,
+                                        DateTime.now().day);
+                                    DateTime pickedDateWithoutTime =
+                                    DateTime(
+                                        pickedDate.year,
+                                        pickedDate.month,
+                                        pickedDate.day);
+
+                                    if (pickedDateWithoutTime.isAfter(
+                                        currentDateWithoutTime) ||
+                                        pickedDateWithoutTime
+                                            .isAtSameMomentAs(
+                                            currentDateWithoutTime)) {
+                                      //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                                      setState(() {
+                                        String formattedDate =
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(pickedDate);
+                                        toDateController.text =
+                                            formattedDate;
+                                      });
+                                    } else {
+                                      // Display an error message or take appropriate action
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text('Invalid Date',
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    'Poppins')),
+                                            content: Text(
+                                                'Please select the correct date.',
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    'Poppins')),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('OK',
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        'Poppins')),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else {}
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    Center(
+                      child: InkWell(
+                        onTap: () async {
+                          List<Data> dataList = await fetchData(
+                              fromDate: fromDate,
+                              toDate: toDate,
+                              selectedValue: selectedId);
+                          setState(() {
+                            data = dataList;
+                          });
+                        },
+                        child: Container(
+                          height: 5.h,
+                          width: 32.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.sp),
+                            color: Color(0xff7c81dd),
+                          ),
+                          child: Center(
+                              child: Text(
+                                "Search",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
                     Expanded(
                       child: data.isEmpty // Check if the data list is empty
                           ? FutureBuilder<List<Data>>(
@@ -610,10 +657,10 @@ class _OverdueTask extends State<OverdueTask> {
                                       controller: controller,
                                       itemCount: snapshot.data!.length,
                                       padding: EdgeInsets.only(
-                                          top: 10,
-                                          bottom: 80,
-                                          left: 15,
-                                          right: 15),
+                                          top: 7.sp,
+                                          bottom: 50.sp,
+                                          left: 10.sp,
+                                          right: 10.sp),
                                       itemBuilder: (context, index) {
                                         return GestureDetector(
                                           child: CustomeListOverdue(

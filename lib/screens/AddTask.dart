@@ -741,7 +741,7 @@ class _AddTaskState extends State<AddTask> {
     String audioPath = widget.audioPath;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff8155BA),
+        backgroundColor:  Color(0xff7c81dd),
         elevation: 0,
         title:  Text(
           'Add Task',
@@ -987,7 +987,6 @@ class _AddTaskState extends State<AddTask> {
                                   firstDate: DateTime(1950),
                                   lastDate: DateTime(2100),
                                 );
-
                                 if (pickedDate != null) {
                                   DateTime currentDateWithoutTime = DateTime(
                                       DateTime.now().year,
@@ -1092,7 +1091,6 @@ class _AddTaskState extends State<AddTask> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                    SizedBox(height: 4.h),
@@ -1821,7 +1819,7 @@ class _AddTaskState extends State<AddTask> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:Color(0xff8155BA),
+                              backgroundColor:Color(0xff7c81dd),
                             ),
                             onPressed: () {
                               //myAudio();
@@ -1853,7 +1851,7 @@ class _AddTaskState extends State<AddTask> {
                               myAlert();
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:Color(0xff8155BA),
+                              backgroundColor:Color(0xff7c81dd),
                             ),
                             child: Text('Upload Photo',
                                 style: TextStyle(
@@ -1894,7 +1892,7 @@ class _AddTaskState extends State<AddTask> {
                         : const Text(''),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:Color(0xff8155BA),
+                        backgroundColor:Color(0xff7c81dd),
                       ),
                       // onPressed: isLoading
                       //     ? null

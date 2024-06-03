@@ -125,20 +125,15 @@ class CustomListCompleted extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: status == 'complete'
-                      ? Color(0xFFC9CC3F)
+                      ? Colors.green.withOpacity(0.9)
                       : status == 'pending'
                           ? Colors.amber
                           : status == 'Overdue'
                               ?
                               //Color(0xFF00CED1)
-                              Color.fromARGB(
-                                  255, // Alpha component (fully opaque)
-                                  194, // Red component
-                                  24, // Green component
-                                  7, // Blue component
-                                )
+                              Colors.red.withOpacity(0.9)
                               //
-                              : Color.fromARGB(255, 77, 77, 174),
+                              : Colors.red.withOpacity(0.9),
                   borderRadius: BorderRadius.only(
                     topLeft:
                         Radius.circular(10.0), // Adjust the radii as needed
@@ -150,20 +145,21 @@ class CustomListCompleted extends StatelessWidget {
                       30.0, 10.0, 30.0, 10.0), // Padding for the first Row
                   child: Container(
                     color: status == 'complete'
-                        ? Color(0xFFC9CC3F)
+                        ? Colors.green.withOpacity(0.1)
                         : status == 'pending'
                             ? Colors.amber
                             : status == 'Overdue'
                                 ?
                                 //Color(0xFF00CED1)
-                                Color.fromARGB(
-                                    255, // Alpha component (fully opaque)
-                                    194, // Red component
-                                    24, // Green component
-                                    7, // Blue component
-                                  )
+                                // Color.fromARGB(
+                                //     255, // Alpha component (fully opaque)
+                                //     194, // Red component
+                                //     24, // Green component
+                                //     7, // Blue component
+                                //   )
+                                Colors.red.withOpacity(0.9)
                                 //
-                                : Color.fromARGB(255, 77, 77, 174),
+                                : Colors.red.withOpacity(0.9),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

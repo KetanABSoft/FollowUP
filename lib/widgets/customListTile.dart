@@ -5,6 +5,7 @@ import 'package:followup/screens/Remark.dart';
 import 'package:followup/screens/ViewTask.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:followup/constant/conurl.dart';
+import 'package:sizer/sizer.dart';
 // import 'package:followup/EditTask.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
@@ -123,10 +124,10 @@ class CustomListAll extends StatelessWidget {
               );
             },
             child: Container(
-              margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+              margin: EdgeInsets.only(top: 20.0.sp,),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(9.sp),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -145,54 +146,50 @@ class CustomListAll extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: status == 'complete'
-                          ? Color(0xFFC9CC3F)
+                          ?Colors.green.withOpacity(0.9)
                           : status == 'pending'
                               ? Colors.amber
                               : status == 'Overdue'
                                   ?
                                   //Color(0xFF00CED1)
-                                  Color.fromARGB(
-                                      255, // Alpha component (fully opaque)
-                                      194, // Red component
-                                      24, // Green component
-                                      7, // Blue component
-                                    )
+                                  // Color.fromARGB(
+                                  //     255, // Alpha component (fully opaque)
+                                  //     194, // Red component
+                                  //     24, // Green component
+                                  //     7, // Blue component
+                                  //   )
+                      Colors.red.withOpacity(0.9)
                                   // : Color.fromARGB(
                                   //     255, // Alpha component (fully opaque)
                                   //     194, // Red component
                                   //     24,  // Green component
                                   //     7,   // Blue component
                                   //   ),
-                                  : Color.fromARGB(255, 77, 77, 174),
+                                  :   Colors.red.withOpacity(0.9),
                       borderRadius: BorderRadius.only(
                         topLeft:
-                            Radius.circular(10.0), // Adjust the radii as needed
-                        topRight: Radius.circular(10.0),
+                            Radius.circular(9.0.sp), // Adjust the radii as needed
+                        topRight: Radius.circular(9.0.sp),
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                      padding: EdgeInsets.fromLTRB(20.0.sp, 10.0.sp, 20.0.sp, 10.0.sp),
                       child: Container(
                         color: status == 'complete'
-                            ? Color(0xFFC9CC3F)
+                            ? Colors.green.withOpacity(0.1)
                             : status == 'pending'
                                 ? Colors.amber
                                 : status == 'Overdue'
                                     ?
                                     //Color(0xFF00CED1)
-                                    Color.fromARGB(
-                                        255, // Alpha component (fully opaque)
-                                        194, // Red component
-                                        24, // Green component
-                                        7, // Blue component
-                                      )
+                         Colors.red.withOpacity(0.1)
                                     // : Color.fromARGB(
                                     //     255, // Alpha component (fully opaque)
                                     //     194, // Red component
                                     //     24,  // Green component
                                     //     7,   // Blue component
                                     //   ),
-                                    : Color.fromARGB(255, 77, 77, 174),
+                                    :   Colors.red.withOpacity(0.9),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -201,7 +198,7 @@ class CustomListAll extends StatelessWidget {
                                     'Complete',
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: 14.0,
+                                      fontSize: 13.0.sp,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -209,9 +206,9 @@ class CustomListAll extends StatelessWidget {
                                 : status == 'pending'
                                     ? Text(
                                         'Pending',
-                                        style: TextStyle(
+                                          style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 14.0,
+                                          fontSize: 13.0.sp,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -221,7 +218,7 @@ class CustomListAll extends StatelessWidget {
                                             'Overdue',
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
-                                              fontSize: 14.0,
+                                              fontSize: 13.0.sp,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -230,7 +227,7 @@ class CustomListAll extends StatelessWidget {
                                             'Pending',
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
-                                              fontSize: 14.0,
+                                              fontSize: 13.0.sp,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -238,7 +235,7 @@ class CustomListAll extends StatelessWidget {
                             Text(
                               '$assign',
                               style: TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 13.0.sp,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -249,7 +246,7 @@ class CustomListAll extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                    padding:  EdgeInsets.only(left: 15.sp,right: 15.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -258,7 +255,7 @@ class CustomListAll extends StatelessWidget {
                             '$title',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 14.0,
+                              fontSize: 14.0.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -406,7 +403,8 @@ class CustomListAll extends StatelessWidget {
                                         launchWhatsApp(phoneNumber, message);
                                       }
                                     },
-                                    icon: Icon(Icons.more_vert),
+                                    icon: Icon(Icons.more_vert,
+                                    size: 22.sp,),
                                   ),
 
                                   // Positioned(
@@ -558,34 +556,37 @@ class CustomListAll extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(),
+                  Divider(
+                    height: 3.h,
+                  ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                    padding: EdgeInsets.only(left: 15.sp,right: 15.sp),
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Icon(
                           Icons.access_time,
-                          size: 24, // Adjust the size of the icon as needed
+                          size: 22.sp,
                           color: Colors.black,
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 3.w),
                         Text(
                           '$date',
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 12.0,
+                            fontSize: 12.0.sp,
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(width: 35.0),
-                        Icon(Icons.access_time),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 10.w),
+                        Icon(Icons.access_time,
+                          size: 22.sp,),
+                        SizedBox(width: 3.w),
                         Text(
                           '$deadline',
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 12.0,
+                            fontSize: 12.0.sp,
                             color: Colors.black,
                           ),
                         ),
@@ -593,27 +594,25 @@ class CustomListAll extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
+                      padding: EdgeInsets.only(left: 15.sp,right: 15.sp,top: 7.sp,bottom: 7.sp),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                       // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SizedBox(width: 35.0),
+                          SizedBox(width:10.w),
                           Text(
                             '$starttime',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12.0,
+                              fontSize: 12.0.sp,
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(
-                            width: 75.0,
-                          ),
+                          SizedBox(width:28.w),
                           Text(
                             '$endtime',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12.0,
+                              fontSize: 12.0.sp,
                               color: Colors.black,
                             ),
                           ),
