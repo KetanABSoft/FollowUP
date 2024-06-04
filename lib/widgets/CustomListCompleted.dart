@@ -26,7 +26,7 @@ void deletedata(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -49,7 +49,7 @@ void completetask(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -127,7 +127,7 @@ class CustomListCompleted extends StatelessWidget {
                   color: status == 'complete'
                       ? Colors.green.withOpacity(0.9)
                       : status == 'pending'
-                          ? Colors.amber
+                          ? Color.fromARGB(255, 77, 77, 174)
                           : status == 'Overdue'
                               ?
                               //Color(0xFF00CED1)
@@ -147,7 +147,7 @@ class CustomListCompleted extends StatelessWidget {
                     color: status == 'complete'
                         ? Colors.green.withOpacity(0.1)
                         : status == 'pending'
-                            ? Colors.amber
+                            ? Color.fromARGB(255, 77, 77, 174)
                             : status == 'Overdue'
                                 ?
                                 //Color(0xFF00CED1)
@@ -249,6 +249,7 @@ class CustomListCompleted extends StatelessWidget {
                                         style:
                                             TextStyle(fontFamily: 'Poppins')),
                                   ),
+
                                   // if (assignid == mainid)
                                   //   const PopupMenuItem<String>(
                                   //     value: 'edit',
@@ -256,6 +257,7 @@ class CustomListCompleted extends StatelessWidget {
                                   //         style:
                                   //             TextStyle(fontFamily: 'Poppins')),
                                   //   ),
+
                                   if (assignid == mainid)
                                     const PopupMenuItem<String>(
                                       value: 'delete',

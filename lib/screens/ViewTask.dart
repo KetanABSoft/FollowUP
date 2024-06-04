@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:followup/constant/conurl.dart';
 import 'package:http/http.dart' as http;
+import 'package:sizer/sizer.dart';
 import 'ListAll.dart';
 import 'package:audioplayers/audioplayers.dart';
+
+import 'dashboard.dart';
 
 class Viewtask extends StatefulWidget {
   final String id;
@@ -128,44 +133,26 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFD700),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(0, 2),
-              ),
-            ],
+      appBar: AppBar(
+        // backgroundColor: Color(0xff8155BA),
+        backgroundColor: Color(0xff7c81dd),
+        elevation: 0,
+        title: Text(
+          'View Task',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
           ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'View Task',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: AppString.appgraycolor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-              onPressed: () {
-                audioPlayer.pause();
-                Navigator.pop(context);
-              },
-            ),
-          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+           Navigator.pop(context);
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -176,132 +163,207 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back,
-            color: AppString.appgraycolor), // Change the icon as needed
-        backgroundColor: Color(0xFFFFD700), // Change the color as needed
+            color:Colors.white), // Change the icon as needed
+        backgroundColor: Color(0xff7c81dd), // Change the color as needed
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
           .endFloat, // Adjust the position as needed
-
       body: WillPopScope(
         onWillPop: () => onwillpop(context),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.only(left: 8.sp,right: 8.sp,top: 12.sp),
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.sp),
               ),
               elevation: 5,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding:  EdgeInsets.all(10.0.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    TextFormField(
-                      readOnly: true,
-                      enabled: false,
-                      controller: titlenew,
-                      decoration: InputDecoration(
-                        labelText: 'Title',
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.black, // Change the label color here
-                        ),
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors
-                                  .grey), // Change the bottom line color here
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors
-                                  .blue), // Change the focused bottom line color here
+                    Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextFormField(
+                        readOnly: true,
+                        enabled: false,
+                        controller: titlenew,
+                        decoration: InputDecoration(
+                          labelText: 'Title',
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16.0),
+                    SizedBox(
+                      height: 4.h,
+                    ),
                     Row(
                       children: [
-                        Flexible(
-                          child: TextFormField(
-                            readOnly: true,
-                            enabled: false,
-                            controller: startdatenew,
-                            decoration: InputDecoration(
-                              icon: const Icon(Icons.date_range),
-                              labelText: 'Start Date',
-                              labelStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                color:
-                                    Colors.black, // Change the label color here
-                              ),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .grey), // Change the bottom line color here
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .blue), // Change the focused bottom line color here
+                        Expanded(
+                          child: Container(
+                            height: 5.5.h,
+                            width: 45.w,
+                            child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
+                              controller: startdatenew,
+                              decoration: InputDecoration(
+                                icon: const Icon(Icons.date_range),
+                                labelText: 'Start Date',
+                                labelStyle: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black, // Change the label color here
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16.0),
+
+                        SizedBox(width: 12.0.sp),
                         Flexible(
-                          child: TextField(
-                            enabled: false,
-                            readOnly: true,
-                            controller: starttimenew,
-                            decoration: InputDecoration(
-                              icon: Icon(Icons.timer),
-                              labelText: 'Start Time',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                color:
-                                    Colors.black, // Change the label color here
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .grey), // Change the bottom line color here
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .blue), // Change the focused bottom line color here
+                          child: Container(
+                            height: 5.5.h,
+                            width: 45.w,
+                            child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
+                              controller: endtdatenew,
+                              decoration: InputDecoration(
+                                icon: const Icon(Icons.date_range),
+                                labelText: 'End date',
+                                labelStyle: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                  Colors.black, // Change the label color here
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(
+                      height: 4.h,
+                    ),
                     Row(
                       children: [
-                        Flexible(
-                          child: TextFormField(
-                            readOnly: true,
-                            enabled: false,
-                            controller: endtdatenew,
-                            decoration: InputDecoration(
-                              icon: const Icon(Icons.date_range),
-                              labelText: 'End date',
-                              labelStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                color:
-                                    Colors.black, // Change the label color here
-                              ),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .grey), // Change the bottom line color here
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .blue), // Change the focused bottom line color here
+                        Expanded(
+                          child: Container(
+                            height: 5.5.h,
+                            width: 45.w,
+                            child: TextField(
+                              enabled: false,
+                              readOnly: true,
+                              controller: starttimenew,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.timer),
+                                labelText: 'Start Time',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                  Colors.black, // Change the label color here
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
                               ),
                             ),
                           ),
@@ -310,53 +372,92 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
                             width:
                                 16.0), // Adjust the spacing between the text fields
                         Flexible(
-                          child: TextField(
-                            enabled: false,
-                            controller: endtimenew,
-                            decoration: InputDecoration(
-                              icon: Icon(Icons.timer),
-                              labelText: 'End Time',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                color:
-                                    Colors.black, // Change the label color here
+                          child: Container(
+                            height: 5.5.h,
+                            width: 45.w,
+                            child: TextField(
+                              enabled: false,
+                              controller: endtimenew,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.timer),
+                                labelText: 'End Time',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                      Colors.black, // Change the label color here
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight:  Radius.circular(7),
+                                      bottomLeft:  Radius.circular(7),
+                                      bottomRight:  Radius.circular(7),
+                                    )
+                                ),
                               ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .grey), // Change the bottom line color here
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .blue), // Change the focused bottom line color here
-                              ),
-                            ),
 
-                            readOnly:
-                                true, //set it true, so that user will not able to edit text
+                              readOnly:
+                                  true, //set it true, so that user will not able to edit text
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    TextFormField(
-                      enabled: false,
-                      controller: selectassignenew,
-                      decoration: InputDecoration(
-                        labelText: 'Assign Name',
-                        labelStyle: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.black, // Change the label color here
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors
-                                  .grey), // Change the bottom line color here
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors
-                                  .blue), // Change the focused bottom line color here
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextFormField(
+                        enabled: false,
+                        controller: selectassignenew,
+                        decoration: InputDecoration(
+                          labelText: 'Assign Name',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(7),
+                                topRight:  Radius.circular(7),
+                                bottomLeft:  Radius.circular(7),
+                                bottomRight:  Radius.circular(7),
+                              )
+                          ),
                         ),
                       ),
                     ),

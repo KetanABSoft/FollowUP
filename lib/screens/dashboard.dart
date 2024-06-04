@@ -270,7 +270,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           taskData[0] = TaskData(
             taskName: 'Task',
             taskValue: doubleValue1.isFinite ? doubleValue1 : 0,
-            taskColor: Colors.grey,
+            taskColor: Colors.blue,
           );
           taskData[1] = TaskData(
             taskName: 'Pending',
@@ -280,17 +280,12 @@ class _DashboardScreenState extends State<DashboardScreen>
           taskData[2] = TaskData(
             taskName: 'Overdue',
             taskValue: doubleValue6.isFinite ? doubleValue6 : 0,
-            taskColor: Color.fromARGB(
-              255, // Alpha component (fully opaque)
-              194, // Red component
-              24, // Green component
-              7, // Blue component
-            ),
+            taskColor:   Colors.red.withOpacity(0.9),
           );
           taskData[3] = TaskData(
             taskName: 'Completed',
             taskValue: doubleValue2.isFinite ? doubleValue2 : 0,
-            taskColor: Color.fromARGB(255, 96, 175, 96),
+            taskColor:  Colors.green.withOpacity(0.9),
           );
           taskData[4] = TaskData(
             taskName: 'Send',
@@ -345,7 +340,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     TaskData(
       taskName: 'Task',
       taskValue: 0, // Use a placeholder or default value
-      taskColor: Colors.grey,
+      taskColor: Colors.blue,
     ),
     TaskData(
       taskName: 'Pending',
@@ -355,17 +350,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     TaskData(
       taskName: 'Overdue',
       taskValue: 0, // Use a placeholder or default value
-      taskColor: Color.fromARGB(
-        255, // Alpha component (fully opaque)
-        194, // Red component
-        24, // Green component
-        7, // Blue component
-      ),
+      taskColor:   Colors.red.withOpacity(0.9),
     ),
     TaskData(
       taskName: 'Completed',
       taskValue: 0, // Use a placeholder or default value
-      taskColor: Color.fromARGB(255, 96, 175, 96),
+      taskColor:   Colors.green.withOpacity(0.9),
     ),
     TaskData(
       taskName: 'Send',
@@ -405,15 +395,10 @@ class _DashboardScreenState extends State<DashboardScreen>
     'assets/Tasksend.png',
   ];
   final List<Color> colors = [
-    Colors.grey,
+    Colors.blue,
     Color.fromARGB(255, 77, 77, 174),
-    Color.fromARGB(
-      255, // Alpha component (fully opaque)
-      194, // Red component
-      24, // Green component
-      7, // Blue component
-    ),
-    Color.fromARGB(255, 96, 175, 96),
+    Colors.red.withOpacity(0.9),
+    Colors.green.withOpacity(0.9),
     Color.fromARGB(255, 230, 200, 32),
     Colors.orange,
   ];

@@ -230,7 +230,7 @@ class _DashBoard extends State<DashBoard> {
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
-              fontSize: 20.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -262,7 +262,7 @@ class _DashBoard extends State<DashBoard> {
                               children: [
                                 Row(
                                   children: [
-                                    SizedBox(width: 10),
+                                    //SizedBox(width: 50.w),
                                     Expanded(
                                       child: TextFormField(
                                         decoration: const InputDecoration(
@@ -405,7 +405,7 @@ class _DashBoard extends State<DashBoard> {
                                     SizedBox(width: 3.w),
                                   ],
                                 ),
-                                SizedBox(height: 3.w),
+                                SizedBox(height: 1.w),
                                 Row(
                                   children: [
                                     SizedBox(width: 3.w),
@@ -445,16 +445,16 @@ class _DashBoard extends State<DashBoard> {
                                                 fontFamily: 'Poppins')),
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 10.w),
                                   ],
                                 ),
                               ],
                             ),
                           )
                         :
-                    Padding(
+                    Padding (
                             padding: EdgeInsets.only(
-                                top: 3.1.h, left: 12.sp, right: 12.sp),
+                                top: 2.8.h, left: 12.sp, right: 12.sp),
                             child: Row(
                               children: [
                                 Expanded(
@@ -638,7 +638,7 @@ class _DashBoard extends State<DashBoard> {
                             ),
                           ),
                     SizedBox(
-                      height: 3.3.h,
+                      height: 3.8.h,
                     ),
                     Center(
                       child: InkWell(
@@ -652,8 +652,8 @@ class _DashBoard extends State<DashBoard> {
                           });
                         },
                         child: Container(
-                          height: 5.h,
-                          width: 32.w,
+                          height: 4.5.h,
+                          width: 27.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.sp),
                             color: Color(0xff7c81dd),
@@ -663,28 +663,14 @@ class _DashBoard extends State<DashBoard> {
                             "Search",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w600),
                           )),
                         ),
                       ),
                     ),
-
-                    // ElevatedButton(
-                    //   onPressed: () async {
-                    //     List<Data> dataList = await fetchData(
-                    //         fromDate: fromDate,
-                    //         toDate: toDate,
-                    //         selectedValue: selectedId);
-                    //     setState(() {
-                    //       // Update the state with the new data
-                    //       data = dataList;
-                    //     });
-                    //   },
-                    //   child: Text('Search'),
-                    // ),
                     SizedBox(
-                      height: 1.1.h,
+                      height: 0.5.h,
                     ),
                     Expanded(
                       child: data.isEmpty // Check if the data list is empty

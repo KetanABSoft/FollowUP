@@ -214,48 +214,31 @@ class _Send extends State<Send> {
         return true;
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFFFD700),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
+        appBar: AppBar(
+          // backgroundColor: Color(0xff8155BA),
+          backgroundColor: Color(0xff7c81dd),
+          elevation: 0,
+          title: Text(
+            'Task Send',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Task Send',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: AppString.appgraycolor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
                 ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DashboardScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
+              );
+            },
           ),
         ),
         body: Stack(
@@ -273,7 +256,7 @@ class _Send extends State<Send> {
                         children: [
                           Row(
                             children: [
-                              SizedBox(width: 10),
+                              //SizedBox(width: 50.w),
                               Expanded(
                                 child: TextFormField(
                                   decoration: const InputDecoration(
@@ -416,7 +399,7 @@ class _Send extends State<Send> {
                               SizedBox(width: 3.w),
                             ],
                           ),
-                          SizedBox(height: 3.w),
+                          SizedBox(height: 1.w),
                           Row(
                             children: [
                               SizedBox(width: 3.w),
@@ -456,16 +439,16 @@ class _Send extends State<Send> {
                                           fontFamily: 'Poppins')),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 10.w),
                             ],
                           ),
                         ],
                       ),
                     )
                         :
-                    Padding(
+                    Padding (
                       padding: EdgeInsets.only(
-                          top: 18.sp, left: 12.sp, right: 12.sp),
+                          top: 4.h, left: 12.sp, right: 12.sp),
                       child: Row(
                         children: [
                           Expanded(
@@ -638,7 +621,9 @@ class _Send extends State<Send> {
                                         },
                                       );
                                     }
-                                  } else {}
+                                  } else {
+
+                                  }
                                 },
                               ),
                             ),
@@ -647,7 +632,7 @@ class _Send extends State<Send> {
                       ),
                     ),
                     SizedBox(
-                      height: 3.h,
+                      height: 3.9.h,
                     ),
                     Center(
                       child: InkWell(
@@ -677,6 +662,9 @@ class _Send extends State<Send> {
                               )),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 1.1.h,
                     ),
                     Expanded(
                       child: data.isEmpty // Check if the data list is empty

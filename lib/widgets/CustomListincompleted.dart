@@ -6,6 +6,7 @@ import 'package:followup/screens/Taskincompleted.dart';
 import 'package:followup/screens/ViewTask.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:followup/constant/conurl.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:followup/EditTask.dart';
@@ -39,7 +40,7 @@ void deletedata(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -62,7 +63,7 @@ void completetask(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -142,50 +143,39 @@ class CustomListincompleted extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: status == 'complete'
-                      ? Color(0xFFC9CC3F)
+                      ? Colors.green.withOpacity(0.9)
                       : status == 'pending'
-                          ? Colors.amber
+                          ?    Color.fromARGB(255, 77, 77, 174)
                           : status == 'Overdue'
                               ?
                               // Color(0xFF00CED1)
-                              Color.fromARGB(
-                                  255, // Alpha component (fully opaque)
-                                  194, // Red component
-                                  24, // Green component
-                                  7, // Blue component
-                                )
+                  Colors.red.withOpacity(0.9)
                               // : Color.fromARGB(
                               //     255, // Alpha component (fully opaque)
                               //     194, // Red component
                               //     24,  // Green component
                               //     7,   // Blue component
                               //   ),
-                              : Color.fromARGB(255, 77, 77, 174),
+                              :      Color.fromARGB(255, 77, 77, 174),
                   borderRadius: BorderRadius.only(
                     topLeft:
-                        Radius.circular(10.0), // Adjust the radii as needed
-                    topRight: Radius.circular(10.0),
+                    Radius.circular(9.0.sp), // Adjust the radii as needed
+                    topRight:  Radius.circular(9.0.sp),
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      30.0, 10.0, 30.0, 10.0), // Padding for the first Row
+                  padding: EdgeInsets.fromLTRB(20.0.sp, 10.0.sp, 20.0.sp, 10.0.sp), // Padding for the first Row
                   child: Container(
                     color: status == 'complete'
-                        ? Color(0xFFC9CC3F)
+                        ?Colors.green.withOpacity(0.9)
                         : status == 'pending'
-                            ? Colors.amber
+                            ?   Color.fromARGB(255, 77, 77, 174)
                             : status == 'Overdue'
                                 ?
                                 //Color(0xFF00CED1)
-                                Color.fromARGB(
-                                    255, // Alpha component (fully opaque)
-                                    194, // Red component
-                                    24, // Green component
-                                    7, // Blue component
-                                  )
+                                 Color.fromARGB(255, 77, 77, 174)
                                 //
-                                : Color.fromARGB(255, 77, 77, 174),
+                                :     Color.fromARGB(255, 77, 77, 174),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -194,7 +184,7 @@ class CustomListincompleted extends StatelessWidget {
                                 'Complete',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
-                                  fontSize: 14.0,
+                                  fontSize: 13.0.sp,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -203,7 +193,7 @@ class CustomListincompleted extends StatelessWidget {
                                 ? Text(
                                     'Pending',
                                     style: TextStyle(
-                                      fontSize: 14.0,
+                                      fontSize: 13.0.sp,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -213,7 +203,7 @@ class CustomListincompleted extends StatelessWidget {
                                         'Overdue',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 14.0,
+                                          fontSize: 13.0.sp,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -222,7 +212,7 @@ class CustomListincompleted extends StatelessWidget {
                                         'Pending',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 14.0,
+                                          fontSize: 13.0.sp,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -231,7 +221,7 @@ class CustomListincompleted extends StatelessWidget {
                           '$assign',
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 16.0,
+                            fontSize: 13.0.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -242,7 +232,7 @@ class CustomListincompleted extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                padding:  EdgeInsets.only(left: 15.sp,right: 15.sp),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -251,7 +241,7 @@ class CustomListincompleted extends StatelessWidget {
                         '$title',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 14.0,
+                          fontSize: 14.0.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -517,39 +507,43 @@ class CustomListincompleted extends StatelessWidget {
                                 launchWhatsApp(phoneNumber, message);
                               }
                             },
-                            icon: Icon(Icons.more_vert),
+                            icon: Icon(Icons.more_vert,
+                              size: 22.sp,),
                           ),
                   ],
                 ),
               ),
-              Divider(),
+              Divider(
+                height: 1.h,
+              ),
               Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                padding: EdgeInsets.only(left: 15.sp,right: 15.sp),
                 child: Row(
                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Icon(
                       Icons.access_time,
-                      size: 24, // Adjust the size of the icon as needed
+                      size: 22.sp, // Adjust the size of the icon as needed
                       color: Colors.black,
                     ),
-                    SizedBox(width: 10.0),
+                    SizedBox(width: 4.w),
                     Text(
                       '$date',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 12.0,
+                        fontSize: 12.0.sp,
                         color: Colors.black,
                       ),
                     ),
                     SizedBox(width: 35.0),
-                    Icon(Icons.access_time),
-                    SizedBox(width: 10.0),
+                    Icon(Icons.access_time,
+                      size: 22.sp,),
+                    SizedBox(width: 3.w),
                     Text(
                       '$deadline',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 12.0,
+                        fontSize: 12.0.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -557,27 +551,25 @@ class CustomListincompleted extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
+                  padding: EdgeInsets.only(left: 15.sp,right: 15.sp,top: 7.sp,bottom: 7.sp),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 35.0),
+                      SizedBox(width:12.w),
                       Text(
                         '$starttime',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 12.0,
+                          fontSize: 12.0.sp,
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(
-                        width: 75.0,
-                      ),
+                      SizedBox(width:25.w),
                       Text(
                         '$endtime',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 12.0,
+                          fontSize: 12.0.sp,
                           color: Colors.black,
                         ),
                       ),

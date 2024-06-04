@@ -238,7 +238,7 @@ class _OverdueTask extends State<OverdueTask> {
                         children: [
                           Row(
                             children: [
-                              SizedBox(width: 10),
+                              //SizedBox(width: 50.w),
                               Expanded(
                                 child: TextFormField(
                                   decoration: const InputDecoration(
@@ -381,7 +381,7 @@ class _OverdueTask extends State<OverdueTask> {
                               SizedBox(width: 3.w),
                             ],
                           ),
-                          SizedBox(height: 3.w),
+                          SizedBox(height: 1.w),
                           Row(
                             children: [
                               SizedBox(width: 3.w),
@@ -421,16 +421,16 @@ class _OverdueTask extends State<OverdueTask> {
                                           fontFamily: 'Poppins')),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 10.w),
                             ],
                           ),
                         ],
                       ),
                     )
                         :
-                    Padding(
+                    Padding (
                       padding: EdgeInsets.only(
-                          top: 18.sp, left: 12.sp, right: 12.sp),
+                          top: 4.h, left: 12.sp, right: 12.sp),
                       child: Row(
                         children: [
                           Expanded(
@@ -603,7 +603,9 @@ class _OverdueTask extends State<OverdueTask> {
                                         },
                                       );
                                     }
-                                  } else {}
+                                  } else {
+
+                                  }
                                 },
                               ),
                             ),
@@ -612,7 +614,7 @@ class _OverdueTask extends State<OverdueTask> {
                       ),
                     ),
                     SizedBox(
-                      height: 3.h,
+                      height: 3.9.h,
                     ),
                     Center(
                       child: InkWell(
@@ -644,7 +646,7 @@ class _OverdueTask extends State<OverdueTask> {
                       ),
                     ),
                     SizedBox(
-                      height: 2.h,
+                      height: 1.1.h,
                     ),
                     Expanded(
                       child: data.isEmpty // Check if the data list is empty

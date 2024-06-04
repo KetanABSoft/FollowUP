@@ -25,7 +25,7 @@ void deletedata(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -48,7 +48,7 @@ void completetask(String id) async {
   print(jsondata);
   if (jsondata['success'] == "success") {
     Fluttertoast.showToast(
-      backgroundColor: Color.fromARGB(255, 0, 255, 55),
+      backgroundColor: Color(0xff7c81dd),
       textColor: Colors.white,
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
@@ -124,9 +124,9 @@ class CustomeListOverdue extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: status == 'complete'
-                      ?Colors.green.withOpacity(0.1)
+                      ?Colors.green.withOpacity(0.9)
                       : status == 'pending'
-                          ? Colors.amber
+                          ? Color.fromARGB(255, 77, 77, 174)
                           : status == 'Overdue'
                               ?
                   Colors.red.withOpacity(0.9)
@@ -144,9 +144,9 @@ class CustomeListOverdue extends StatelessWidget {
                       30.0, 10.0, 30.0, 10.0), // Padding for the first Row
                   child: Container(
                     color: status == 'complete'
-                        ? Color(0xFFC9CC3F)
+                        ? Colors.green.withOpacity(0.1)
                         : status == 'pending'
-                            ? Colors.amber
+                            ? Color.fromARGB(255, 77, 77, 174)
                             : status == 'Overdue'
                                 // ? Color(0xFF00CED1)
                                 // : Color(0xFF00CED1),

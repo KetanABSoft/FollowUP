@@ -583,7 +583,7 @@ class _AddTaskState extends State<AddTask> {
                   // ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff8155BA),// Set the button color to purple
+                      backgroundColor: Color(0xff7c81dd),// Set the button color to purple
                     ),
                     //if user click this button. user can upload image from camera
                     onPressed: () {
@@ -613,7 +613,7 @@ class _AddTaskState extends State<AddTask> {
                           height: 4.h,
                           width: 20.w,
                           decoration: BoxDecoration(
-                              color: Color(0xff8155BA),
+                              color: Color(0xff7c81dd),
                               // border: Border.all(color: Colors.red,width: 2),
                               borderRadius: BorderRadius.circular(15)
                           ),
@@ -1853,7 +1853,7 @@ class _AddTaskState extends State<AddTask> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor:Color(0xff7c81dd),
                             ),
-                            child: Text('Upload Photo',
+                            child:Text('Upload Photo',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.white
@@ -1892,8 +1892,9 @@ class _AddTaskState extends State<AddTask> {
                         : const Text(''),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:Color(0xff7c81dd),
+                        backgroundColor: Color(0xff7c81dd),
                       ),
+
                       // onPressed: isLoading
                       //     ? null
                       //     : () {
@@ -1907,6 +1908,7 @@ class _AddTaskState extends State<AddTask> {
                       //         );
 
                       //       },
+
                       onPressed: isButtonEnabled
                           ? null
                           : () {

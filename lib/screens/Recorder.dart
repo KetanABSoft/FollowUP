@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> {
       backgroundColor:Colors.white,
       // appBar: AppBar(title: Text('Audio Recording and Playing')),
       appBar: AppBar(
-        backgroundColor: Color(0xff8155BA),
+        backgroundColor: Color(0xff7c81dd),
         elevation: 0,
         title:  Text(
           'Record Audio',
@@ -280,7 +280,7 @@ class _MyAppState extends State<MyApp> {
                 height: 6.h,
                 width: 30.w,
                 decoration: BoxDecoration(
-                    color: Color(0xff8155BA),
+                    color:Color(0xff7c81dd),
                     // border: Border.all(color: Colors.red,width: 2),
                     borderRadius: BorderRadius.circular(15)
                 ),
