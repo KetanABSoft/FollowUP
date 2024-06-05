@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
+import 'package:sizer/sizer.dart';
 import 'AddTask.dart';
 import 'ListAll.dart';
 import 'Notifications_screen.dart';
@@ -17,6 +18,7 @@ import 'Profile.dart';
 import 'TaskCompleted.dart';
 import 'TaskReceive.dart';
 import 'TaskSend.dart';
+import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'notification_services.dart';
 
@@ -436,6 +438,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (context) => TaskForm(audioPath: AppString.audiourl),
       ),
    );
+   // Get.to(TaskForm(audioPath: AppString.audiourl));
   }
 
   void _handleAddLead(BuildContext context) {
@@ -515,6 +518,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     return WillPopScope(
       onWillPop: () => onWillPopnew(context),
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor:  Color(0xff7c81dd), // Set app bar background color to transparent
@@ -525,14 +529,15 @@ class _DashboardScreenState extends State<DashboardScreen>
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,// Set app bar text color to white
-              fontSize: 20,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           centerTitle: true,
         ),
         body: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.only(
+              top: 1.8.h, left: 12.sp, right: 12.sp),
           child: Column(
             children: [
               // Expanded(
@@ -540,10 +545,10 @@ class _DashboardScreenState extends State<DashboardScreen>
               //   child: TaskManagementChart(data: taskData),
               // ),
               Container(
-                height: 300, // Set the desired height for the chart
+                height: 32.h, // Set the desired height for the chart
                 child: TaskManagementChart(data: taskData),
               ),
-              SizedBox(height: 15.0),
+              //SizedBox(height: 2.h),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -551,24 +556,24 @@ class _DashboardScreenState extends State<DashboardScreen>
                       return Card(
                         child: ListTile(
                           leading: Container(
-                            width: 40, // Adjust the width as needed
-                            height: 30, // Adjust the height as needed
+                            width: 8.w, // Adjust the width as needed
+                            height: 5.h, // Adjust the height as needed
                             decoration: BoxDecoration(
                               //color: Color.fromARGB(255, 238, 232, 232),
                               borderRadius: BorderRadius.circular(
-                                  10.0), // Adjust the border radius as needed
+                                  10.0.sp), // Adjust the border radius as needed
                             ),
                             child: Image.asset(
                               icons[index], // Use the icon path from the list
-                              width: 20, // Adjust the icon width as needed
-                              height: 20, // Adjust the icon height as needed
+                              width: 20.sp, // Adjust the icon width as needed
+                              height: 20.sp, // Adjust the icon height as needed
                             ),
                           ),
                           title: Text(
                             '${items[index]}',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 14, // Font size
+                              fontSize: 11.sp, // Font size
                               fontWeight: FontWeight.bold, // Font weight
                               color: Colors.black, // Text color
                             ),
@@ -577,8 +582,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                             '${taskData[index].taskValue.toInt()}',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 16, // Font size
-                              color: Colors.grey, // Text color
+                              fontSize: 12.sp, // Font size
+                              color: Colors.black, // Text color
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -616,12 +621,12 @@ class _DashboardScreenState extends State<DashboardScreen>
           decoration: BoxDecoration(
             color: Color(0xFFFFD700),
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30),
+              top: Radius.circular(30.sp),
             ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
+                blurRadius: 5.sp,
                 offset: Offset(0, 2),
               ),
             ],
@@ -653,9 +658,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Icon(Icons.notifications),
                     Positioned(
                       right: 0,
-                      top: -1,
+                      top: -4,
                       child: Container(
-                        padding: EdgeInsets.all(4),
+                        padding: EdgeInsets.all(3.sp),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.red,
@@ -664,7 +669,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           notificationCount.toString(),
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 10,
+                            fontSize: 7.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -722,8 +727,8 @@ class TaskManagementChart extends StatelessWidget {
     if (allValuesZero) {
       // If all values are zero, display a gray pie chart
       return Container(
-        width: 200, // Adjust the width as needed
-        height: 200, // Adjust the height as needed
+        width: 50.w, // Adjust the width as needed
+        height: 50.h, // Adjust the height as needed
         decoration: BoxDecoration(
           shape: BoxShape.circle, // Create a circular shape
           color: Colors.grey, // Set the background color to gray
@@ -732,7 +737,7 @@ class TaskManagementChart extends StatelessWidget {
           child: Text(
             '0',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -745,7 +750,7 @@ class TaskManagementChart extends StatelessWidget {
           series,
           animate: true,
           defaultRenderer: charts.ArcRendererConfig<String>(
-            arcWidth: 60,
+            arcWidth: 50,
             arcRendererDecorators: [charts.ArcLabelDecorator()],
           ),
         );

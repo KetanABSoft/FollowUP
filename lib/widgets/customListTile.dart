@@ -124,7 +124,7 @@ class CustomListAll extends StatelessWidget {
               );
             },
             child: Container(
-              margin: EdgeInsets.only(top: 15.0.sp,),
+              margin: EdgeInsets.only(top: 10.0.sp,),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(9.sp),

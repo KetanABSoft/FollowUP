@@ -143,7 +143,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
           style: TextStyle(
             fontFamily: 'Poppins',
             color: Colors.white,
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -510,7 +510,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
                           child: audio != ''
                               ? ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFFFD700),
+                                    backgroundColor: Color(0xff7c81dd),
                                   ),
                                   onPressed: () {
                                     String audioUrl = '$audiourl';
@@ -520,7 +520,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
                                           fontSize: 13.0,
-                                          color: AppString.appgraycolor)),
+                                          color: Colors.white)),
                                 )
                               : SizedBox(),
                         ),
@@ -531,7 +531,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
                                   //width: 150, // Set the width you desire
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFFFFD700),
+                                      backgroundColor: Color(0xff7c81dd),
                                     ),
                                     onPressed: () {
                                       pauseAudio();
@@ -541,7 +541,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
                                           fontSize: 13.0,
-                                          color: AppString.appgraycolor),
+                                          color: Colors.white),
                                     ),
                                   ),
                                 )
