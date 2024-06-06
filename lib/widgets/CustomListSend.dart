@@ -153,7 +153,7 @@ class CustomListSend extends StatelessWidget {
                               //     24,  // Green component
                               //     7,   // Blue component
                               //   ),
-                              :  Colors.red.withOpacity(0.9),
+                              :  Color.fromARGB(255, 77, 77, 174),
                   borderRadius: BorderRadius.only(
                     topLeft:
                         Radius.circular(10.0), // Adjust the radii as needed
@@ -173,7 +173,7 @@ class CustomListSend extends StatelessWidget {
                             //      :Color.fromARGB(255, 77, 77, 174),
                             status == 'Overdue'
                                 ?   Colors.red.withOpacity(0.1)
-                                :   Colors.red.withOpacity(0.1),
+                                :  Color.fromARGB(255, 77, 77, 174),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

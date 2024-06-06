@@ -119,12 +119,12 @@ class CustomListincompleted extends StatelessWidget {
           );
         },
         child: Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+          margin: EdgeInsets.only(top: 10.0.sp,),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             //color: status == 'complete' ? Colors.lightGreen : status =='pending'? Colors.white : Color(0xFFff8a8a),
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(9.sp),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -164,7 +164,7 @@ class CustomListincompleted extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.0.sp, 10.0.sp, 20.0.sp, 10.0.sp), // Padding for the first Row
+                  padding: EdgeInsets.fromLTRB(20.0.sp, 5.0.sp, 20.0.sp, 5.0.sp), // Padding for the first Row
                   child: Container(
                     color: status == 'complete'
                         ?Colors.green.withOpacity(0.9)
@@ -173,7 +173,7 @@ class CustomListincompleted extends StatelessWidget {
                             : status == 'Overdue'
                                 ?
                                 //Color(0xFF00CED1)
-                                 Color.fromARGB(255, 77, 77, 174)
+                                Colors.red.withOpacity(0.1)
                                 //
                                 :     Color.fromARGB(255, 77, 77, 174),
                     child: Row(
@@ -184,7 +184,7 @@ class CustomListincompleted extends StatelessWidget {
                                 'Complete',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
-                                  fontSize: 13.0.sp,
+                                  fontSize: 11.5.sp,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -193,7 +193,7 @@ class CustomListincompleted extends StatelessWidget {
                                 ? Text(
                                     'Pending',
                                     style: TextStyle(
-                                      fontSize: 13.0.sp,
+                                      fontSize: 11.5.sp,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -203,7 +203,7 @@ class CustomListincompleted extends StatelessWidget {
                                         'Overdue',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 13.0.sp,
+                                          fontSize: 11.5.sp,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -212,7 +212,7 @@ class CustomListincompleted extends StatelessWidget {
                                         'Pending',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 13.0.sp,
+                                          fontSize: 11.5.sp,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -221,7 +221,7 @@ class CustomListincompleted extends StatelessWidget {
                           '$assign',
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 13.0.sp,
+                            fontSize: 11.5.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -241,7 +241,7 @@ class CustomListincompleted extends StatelessWidget {
                         '$title',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 14.0.sp,
+                          fontSize: 12.0.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -514,36 +514,36 @@ class CustomListincompleted extends StatelessWidget {
                 ),
               ),
               Divider(
-                height: 1.h,
+                height: 0.5.h,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15.sp,right: 15.sp),
+                padding: EdgeInsets.only(left: 15.sp,right: 15.sp,top: 5.sp),
                 child: Row(
                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Icon(
                       Icons.access_time,
-                      size: 22.sp, // Adjust the size of the icon as needed
+                      size: 18.sp, // Adjust the size of the icon as needed
                       color: Colors.black,
                     ),
-                    SizedBox(width: 4.w),
+                    SizedBox(width: 3.w),
                     Text(
                       '$date',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 12.0.sp,
+                        fontSize: 11.0.sp,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(width: 35.0),
+                    SizedBox(width: 10.w),
                     Icon(Icons.access_time,
-                      size: 22.sp,),
+                      size: 18.sp,),
                     SizedBox(width: 3.w),
                     Text(
                       '$deadline',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 12.0.sp,
+                        fontSize: 11.0.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -555,21 +555,21 @@ class CustomListincompleted extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width:12.w),
+                      SizedBox(width:9.w),
                       Text(
                         '$starttime',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 12.0.sp,
+                          fontSize: 11.0.sp,
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(width:25.w),
+                      SizedBox(width:25.5.w),
                       Text(
                         '$endtime',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 12.0.sp,
+                          fontSize: 11.0.sp,
                           color: Colors.black,
                         ),
                       ),

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 import 'dashboard.dart';
 
@@ -183,7 +184,6 @@ class _DashBoard extends State<DashBoard> {
     fetchData();
     fetchDropdownData();
     selectedValue = 'Select Employee';
-
     fromDateController.text = DateFormat('dd-MM-yyyy').format(date);
     toDateController.text = DateFormat('dd-MM-yyyy').format(date);
   }
@@ -201,52 +201,31 @@ class _DashBoard extends State<DashBoard> {
         return true;
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              // backgroundColor: Color(0xff8155BA),
-              color: Color(0xff8155BA),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
+        appBar: AppBar(
+          // backgroundColor: Color(0xff8155BA),
+          backgroundColor: Color(0xff7c81dd),
+          elevation: 0,
+          title: Text(
+            'Notification',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
             ),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Notifications',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: AppString.appgraycolor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
                 ),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: AppString.appgraycolor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DashboardScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
+              );
+            },
           ),
         ),
         body: Stack(

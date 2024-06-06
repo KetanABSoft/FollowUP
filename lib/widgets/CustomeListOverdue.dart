@@ -132,7 +132,7 @@ class CustomeListOverdue extends StatelessWidget {
                   Colors.red.withOpacity(0.9)
                               :
                               // Color(0xFF00CED1),
-            Colors.red.withOpacity(0.9),
+                  Color.fromARGB(255, 77, 77, 174),
                   borderRadius: BorderRadius.only(
                     topLeft:
                         Radius.circular(10.0), // Adjust the radii as needed
@@ -151,7 +151,7 @@ class CustomeListOverdue extends StatelessWidget {
                                 // ? Color(0xFF00CED1)
                                 // : Color(0xFF00CED1),
                                 ? Colors.red.withOpacity(0.1)
-                                :  Colors.red.withOpacity(0.1),
+                                :  Color.fromARGB(255, 77, 77, 174),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

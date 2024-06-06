@@ -429,7 +429,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Customer Name',
                             helperText: "",
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -472,7 +472,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Company Name',
                             helperText:'',
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -516,7 +516,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Contact number',
                             helperText: "",
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -571,7 +571,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Mail Id',
                             helperText: "",
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -612,7 +612,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Website',
                             helperText: "",
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -652,7 +652,7 @@ class _LeadFormState extends State<LeadForm> {
                           decoration: const InputDecoration(
                             labelText: 'Description',
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
@@ -692,7 +692,7 @@ class _LeadFormState extends State<LeadForm> {
                             labelText: 'Owner name',
                             helperText: "",
                             labelStyle: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(

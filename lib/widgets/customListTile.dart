@@ -166,7 +166,7 @@ class CustomListAll extends StatelessWidget {
                                   //     24,  // Green component
                                   //     7,   // Blue component
                                   //   ),
-                                  :   Colors.red.withOpacity(0.9),
+                                  :   Color.fromARGB(255, 77, 77, 174),
                       borderRadius: BorderRadius.only(
                         topLeft:
                             Radius.circular(9.0.sp), // Adjust the radii as needed
@@ -190,7 +190,7 @@ class CustomListAll extends StatelessWidget {
                                     //     24,  // Green component
                                     //     7,   // Blue component
                                     //   ),
-                                    :   Colors.red.withOpacity(0.1),
+                                    :  Color.fromARGB(255, 77, 77, 174),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

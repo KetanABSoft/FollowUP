@@ -307,7 +307,7 @@ class _Profile extends State<Profile> {
           style: TextStyle(
             fontFamily: 'Poppins',
             color: Colors.white,
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -403,20 +403,43 @@ class _Profile extends State<Profile> {
                 ],
               ),
               const SizedBox(height: 20),
-              Card(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        TextFormField(
+              Padding(
+                padding: const EdgeInsets.all(05),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Container(
+                        height: 5.5.h,
+                        width: 85.w,
+                        child: TextFormField(
                           decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
                             labelText: 'New Password',
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins',
+                              color: Colors.black,
                             ),
                             suffixIcon: GestureDetector(
                               onTap: () {
@@ -428,7 +451,7 @@ class _Profile extends State<Profile> {
                                 _obscureText
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Colors.grey,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -441,11 +464,38 @@ class _Profile extends State<Profile> {
                             return null;
                           },
                         ),
-                        TextFormField(
+                      ),
+                      SizedBox(height: 3.h,),
+                      Container(
+                        height: 5.5.h,
+                        width: 85.w,
+                        child: TextFormField(
                           decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                  bottomLeft: Radius.circular(7),
+                                  bottomRight: Radius.circular(7),
+                                )),
                             labelText: 'Confirm Password',
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins',
+                              color: Colors.black,
                             ),
                             suffixIcon: GestureDetector(
                               onTap: () {
@@ -457,7 +507,7 @@ class _Profile extends State<Profile> {
                                 _obscureTextConfirm
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Colors.grey,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -472,22 +522,22 @@ class _Profile extends State<Profile> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff8155BA),
-                          ),
-                          onPressed: () {
-                            submitForm(_newPasswordController.text,
-                                _confirmPasswordController.text);
-                          },
-                          child: const Text('Save',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white)),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff8155BA),
                         ),
-                      ],
-                    ),
+                        onPressed: () {
+                          submitForm(_newPasswordController.text,
+                              _confirmPasswordController.text);
+                        },
+                        child: const Text('Save',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.white)),
+                      ),
+                    ],
                   ),
                 ),
               ),
