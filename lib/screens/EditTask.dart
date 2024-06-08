@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -23,6 +25,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:sizer/sizer.dart';
 
 import 'EditRecorder.dart';
 import 'ListAll.dart';
@@ -458,47 +461,32 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
     taskk = widget.task;
     admintype = widget.task;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFD700),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Update Task',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: AppString.appgraycolor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-              onPressed: () {
-                audioPlayer.pause();
-                Navigator.pop(context);
-              },
-            ),
+      appBar: AppBar(
+        backgroundColor: Color(0xff7c81dd),
+        elevation: 0,
+        title: Text(
+          'Update Task',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashboardScreen(),
+              ),
+            );
+          },
+        ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed logic for the floating button here
@@ -507,125 +495,272 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back,
-            color: AppString.appgraycolor), // Change the icon as needed
-        backgroundColor: Color(0xFFFFD700), // Change the color as needed
+            color: Colors.white), // Change the icon as needed
+        backgroundColor: Color(0xff7c81dd), // Change the color as needed
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
           .endFloat, // Adjust the position as needed
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
+          padding: EdgeInsets.only(left: 18.sp, right: 18.sp, top: 20.sp),
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 5.5.h,
+                child: TextFormField(
+                  controller: titlee,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                    labelStyle: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(7),
+                      topRight: Radius.circular(7),
+                      bottomLeft: Radius.circular(7),
+                      bottomRight: Radius.circular(7),
+                    )),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(7),
+                      topRight: Radius.circular(7),
+                      bottomLeft: Radius.circular(7),
+                      bottomRight: Radius.circular(7),
+                    )),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(7),
+                      topRight: Radius.circular(7),
+                      bottomLeft: Radius.circular(7),
+                      bottomRight: Radius.circular(7),
+                    )),
+                  ),
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Row(
                 children: [
-                  TextFormField(
-                    controller: titlee,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      labelText: 'Title',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.grey,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
+                  Expanded(
+                    child: Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextFormField(
+                        controller: start_date,
+                        decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.date_range,
+                            size: 20.sp,
+                          ),
+                          labelText: 'Start Date',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1950),
+                              lastDate: DateTime(2100));
+
+                          //  if (pickedDate != null) {
+                          //     if (pickedDate.isAfter(DateTime.now())) {
+                          //       String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                          //       start_date.text = formattedDate;
+                          //     } else {
+                          if (pickedDate != null) {
+                            // Check if pickedDate is after the current date
+                            // Extract date components without time
+                            DateTime currentDateWithoutTime = DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day);
+                            DateTime pickedDateWithoutTime = DateTime(
+                                pickedDate.year,
+                                pickedDate.month,
+                                pickedDate.day);
+
+                            // if (pickedDateWithoutTime.isAfter(currentDateWithoutTime) || pickedDateWithoutTime.isAtSameMomentAs(currentDateWithoutTime)) {
+                            //   String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                            //   start_date.text = formattedDate;
+                            // }
+
+                            if (pickedDateWithoutTime
+                                    .isAfter(currentDateWithoutTime) ||
+                                pickedDateWithoutTime
+                                    .isAtSameMomentAs(currentDateWithoutTime)) {
+                              DateTime pickedStartDate =
+                                  pickedDate; // Assuming you have a valid pickedDate
+                              DateTime pickedEndDate = pickedStartDate.add(
+                                  Duration(
+                                      days:
+                                          1)); // Add one day to the start date
+
+                              String formattedStartDate =
+                                  DateFormat('dd-MM-yyyy')
+                                      .format(pickedStartDate);
+                              String formattedEndDate = DateFormat('dd-MM-yyyy')
+                                  .format(pickedEndDate);
+
+                              setState(() {
+                                start_date.text = formattedStartDate;
+                                deadline_date.text = formattedEndDate;
+                              });
+                            } else {
+                              // Display an error message or take appropriate action
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Invalid Date',
+                                        style:
+                                            TextStyle(fontFamily: 'Poppins')),
+                                    content: Text(
+                                        'Please select the correct date.',
+                                        style:
+                                            TextStyle(fontFamily: 'Poppins')),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('OK',
+                                            style: TextStyle(
+                                                fontFamily: 'Poppins')),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16.0),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: TextFormField(
-                          controller: start_date,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.date_range),
-                            labelText: 'Start Date',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Colors.grey, // Change the label color here
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .grey), // Change the bottom line color here
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .blue), // Change the focused bottom line color here
-                            ),
+                  SizedBox(width: 14.0.sp),
+                  Flexible(
+                    child: Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextFormField(
+                        controller: deadline_date,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.date_range),
+                          labelText: 'End Date',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
                           ),
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime(2100));
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1950),
+                              lastDate: DateTime(2100));
 
-                            //  if (pickedDate != null) {
-                            //     if (pickedDate.isAfter(DateTime.now())) {
-                            //       String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-                            //       start_date.text = formattedDate;
-                            //     } else {
-                            if (pickedDate != null) {
-                              // Check if pickedDate is after the current date
-                              // Extract date components without time
-                              DateTime currentDateWithoutTime = DateTime(
-                                  DateTime.now().year,
-                                  DateTime.now().month,
-                                  DateTime.now().day);
-                              DateTime pickedDateWithoutTime = DateTime(
-                                  pickedDate.year,
-                                  pickedDate.month,
-                                  pickedDate.day);
+                          // if (pickedDate != null) {
 
-                              // if (pickedDateWithoutTime.isAfter(currentDateWithoutTime) || pickedDateWithoutTime.isAtSameMomentAs(currentDateWithoutTime)) {
-                              //   String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-                              //   start_date.text = formattedDate;
-                              // }
+                          if (pickedDate != null) {
+                            // Extract date components without time
+                            DateTime currentDateWithoutTime = DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day);
+                            DateTime pickedDateWithoutTime = DateTime(
+                                pickedDate.year,
+                                pickedDate.month,
+                                pickedDate.day);
+                            DateTime startDate =
+                                DateFormat('dd-MM-yyyy').parse(start_date.text);
 
-                              if (pickedDateWithoutTime
-                                      .isAfter(currentDateWithoutTime) ||
-                                  pickedDateWithoutTime.isAtSameMomentAs(
-                                      currentDateWithoutTime)) {
-                                DateTime pickedStartDate =
-                                    pickedDate; // Assuming you have a valid pickedDate
-                                DateTime pickedEndDate = pickedStartDate.add(
-                                    Duration(
-                                        days:
-                                            1)); // Add one day to the start date
+                            if (pickedDateWithoutTime
+                                    .isAfter(currentDateWithoutTime) ||
+                                pickedDateWithoutTime
+                                    .isAtSameMomentAs(currentDateWithoutTime)) {
+                              //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                              //     setState(() {
+                              //   String formattedDate =
+                              //       DateFormat('dd-MM-yyyy')
+                              //           .format(pickedDate);
+                              //   deadline_date.text = formattedDate;
+                              // });
+                              int starttimenew = int.parse(
+                                  start_time.text.split(":")[0] +
+                                      start_time.text.split(":")[1]);
+                              int endtimenew = int.parse(
+                                  end_time.text.split(":")[0] +
+                                      end_time.text.split(":")[1]);
 
-                                String formattedStartDate =
-                                    DateFormat('dd-MM-yyyy')
-                                        .format(pickedStartDate);
-                                String formattedEndDate =
-                                    DateFormat('dd-MM-yyyy')
-                                        .format(pickedEndDate);
-
+                              if (pickedDateWithoutTime.isAfter(startDate) ||
+                                  (pickedDateWithoutTime
+                                          .isAtSameMomentAs(startDate) &&
+                                      starttimenew < endtimenew)) {
                                 setState(() {
-                                  start_date.text = formattedStartDate;
-                                  deadline_date.text = formattedEndDate;
+                                  String formattedDate =
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(pickedDate);
+                                  deadline_date.text = formattedDate;
                                 });
                               } else {
-                                // Display an error message or take appropriate action
+                                print("helllo1111");
+                                // Display an error message for invalid end date
                                 showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Text('Invalid Date',
+                                      title: Text('Invalid End Date',
                                           style:
                                               TextStyle(fontFamily: 'Poppins')),
                                       content: Text(
@@ -646,60 +781,169 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
                                   },
                                 );
                               }
-                            }
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Flexible(
-                        child: TextField(
-                          controller:
-                              start_time, //editing controller of this TextField
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.timer),
-                            labelText: 'Start Time',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Colors.grey, // Change the label color here
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .grey), // Change the bottom line color here
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .blue), // Change the focused bottom line color here
-                            ),
-                          ),
-                          readOnly:
-                              true, //set it true, so that user will not able to edit text
-                          onTap: () async {
-                            DateFormat dateFormat = DateFormat(
-                                'dd-MM-yyyy'); // Format for the start date
-                            DateTime selectedStartDate =
-                                start_date.text.isNotEmpty
-                                    ? dateFormat.parse(start_date.text)
-                                    : DateTime(0);
-                            DateTime now = DateTime.now();
-
-                            if (selectedStartDate.isAfter(
-                                DateTime(now.year, now.month, now.day))) {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                initialTime: TimeOfDay.now(),
+                            } else {
+                              // Display an error message or take appropriate action
+                              showDialog(
                                 context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Invalid Date',
+                                        style:
+                                            TextStyle(fontFamily: 'Poppins')),
+                                    content: Text(
+                                        'Please select the correct date.',
+                                        style:
+                                            TextStyle(fontFamily: 'Poppins')),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('OK',
+                                            style: TextStyle(
+                                                fontFamily: 'Poppins')),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
+                            }
+                          } else {}
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextField(
+                        controller:
+                            start_time, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.timer),
+                          labelText: 'Start Time',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                        ),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateFormat dateFormat = DateFormat(
+                              'dd-MM-yyyy'); // Format for the start date
+                          DateTime selectedStartDate =
+                              start_date.text.isNotEmpty
+                                  ? dateFormat.parse(start_date.text)
+                                  : DateTime(0);
+                          DateTime now = DateTime.now();
 
-                              if (pickedTime != null) {
-                                DateTime now = DateTime.now();
+                          if (selectedStartDate.isAfter(
+                              DateTime(now.year, now.month, now.day))) {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
 
+                            if (pickedTime != null) {
+                              DateTime now = DateTime.now();
+
+                              // Update the UI with the picked time
+                              String formattedTime =
+                                  DateFormat('HH:mm:ss').format(
+                                DateTime(now.year, now.month, now.day,
+                                    pickedTime.hour, pickedTime.minute),
+                              );
+                              String endTimenew = DateFormat('HH:mm:ss').format(
+                                DateTime(now.year, now.month, now.day,
+                                    pickedTime.hour + 1, pickedTime.minute),
+                              );
+                              // Delay the execution of setState
+                              Future.delayed(Duration.zero, () {
+                                setState(() {
+                                  start_time.text = formattedTime;
+                                  end_time.text = endTimenew;
+                                });
+                              });
+                              //}
+                            } else {
+                              print("Time is not selected");
+                            }
+                          } else {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
+
+                            if (pickedTime != null) {
+                              DateTime now = DateTime.now();
+                              TimeOfDay currentTimeOfDay =
+                                  TimeOfDay.fromDateTime(now);
+
+                              if (pickedTime.hour < currentTimeOfDay.hour ||
+                                  (pickedTime.hour == currentTimeOfDay.hour &&
+                                      pickedTime.minute <
+                                          currentTimeOfDay.minute)) {
+                                // Show error dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Invalid Time',
+                                          style:
+                                              TextStyle(fontFamily: 'Poppins')),
+                                      content: Text(
+                                          'Please select the correct time.',
+                                          style:
+                                              TextStyle(fontFamily: 'Poppins')),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('OK',
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins')),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
                                 // Update the UI with the picked time
                                 String formattedTime =
                                     DateFormat('HH:mm:ss').format(
                                   DateTime(now.year, now.month, now.day,
                                       pickedTime.hour, pickedTime.minute),
                                 );
+
                                 String endTimenew =
                                     DateFormat('HH:mm:ss').format(
                                   DateTime(now.year, now.month, now.day,
@@ -712,194 +956,115 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
                                     end_time.text = endTimenew;
                                   });
                                 });
-                                //}
-                              } else {
-                                print("Time is not selected");
                               }
                             } else {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                initialTime: TimeOfDay.now(),
-                                context: context,
+                              print("Time is not selected");
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                      width: 14.0
+                          .sp), // Adjust the spacing between the text fields
+                  Flexible(
+                    child: Container(
+                      height: 5.5.h,
+                      width: 45.w,
+                      child: TextField(
+                        controller:
+                            end_time, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.timer),
+                          labelText: 'End Time',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: Colors.black, // Change the label color here
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7),
+                            topRight: Radius.circular(7),
+                            bottomLeft: Radius.circular(7),
+                            bottomRight: Radius.circular(7),
+                          )),
+                        ),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateFormat dateFormat = DateFormat(
+                              'dd-MM-yyyy'); // Format for the start date
+
+                          DateTime selectedStartDate =
+                              start_date.text.isNotEmpty
+                                  ? dateFormat.parse(start_date.text)
+                                  : DateTime(0);
+                          DateTime selectedendtDate =
+                              deadline_date.text.isNotEmpty
+                                  ? dateFormat.parse(deadline_date.text)
+                                  : DateTime(0);
+
+                          if (selectedendtDate.isAfter(selectedStartDate)) {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
+                            if (pickedTime != null) {
+                              DateTime now = DateTime.now();
+
+                              String formattedTime =
+                                  DateFormat('HH:mm:ss').format(
+                                DateTime(now.year, now.month, now.day,
+                                    pickedTime.hour, pickedTime.minute),
                               );
 
-                              if (pickedTime != null) {
-                                DateTime now = DateTime.now();
-                                TimeOfDay currentTimeOfDay =
-                                    TimeOfDay.fromDateTime(now);
-
-                                if (pickedTime.hour < currentTimeOfDay.hour ||
-                                    (pickedTime.hour == currentTimeOfDay.hour &&
-                                        pickedTime.minute <
-                                            currentTimeOfDay.minute)) {
-                                  // Show error dialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text('Invalid Time',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        content: Text(
-                                            'Please select the correct time.',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('OK',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins')),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  // Update the UI with the picked time
-                                  String formattedTime =
-                                      DateFormat('HH:mm:ss').format(
-                                    DateTime(now.year, now.month, now.day,
-                                        pickedTime.hour, pickedTime.minute),
-                                  );
-
-                                  String endTimenew =
-                                      DateFormat('HH:mm:ss').format(
-                                    DateTime(now.year, now.month, now.day,
-                                        pickedTime.hour + 1, pickedTime.minute),
-                                  );
-                                  // Delay the execution of setState
-                                  Future.delayed(Duration.zero, () {
-                                    setState(() {
-                                      start_time.text = formattedTime;
-                                      end_time.text = endTimenew;
-                                    });
-                                  });
-                                }
-                              } else {
-                                print("Time is not selected");
-                              }
+                              // Delay the execution of setState
+                              //   // Delay the execution of setState
+                              Future.delayed(Duration.zero, () {
+                                setState(() {
+                                  end_time.text = formattedTime;
+                                });
+                              });
                             }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: TextFormField(
-                          controller: deadline_date,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.date_range),
-                            labelText: 'End Date',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Colors.grey, // Change the label color here
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .grey), // Change the bottom line color here
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .blue), // Change the focused bottom line color here
-                            ),
-                          ),
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime(2100));
+                          } else {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
+                            if (pickedTime != null) {
+                              DateTime now = DateTime.now();
+                              TimeOfDay currentTimeOfDay =
+                                  TimeOfDay.fromDateTime(now);
 
-                            // if (pickedDate != null) {
-
-                            if (pickedDate != null) {
-                              // Extract date components without time
-                              DateTime currentDateWithoutTime = DateTime(
-                                  DateTime.now().year,
-                                  DateTime.now().month,
-                                  DateTime.now().day);
-                              DateTime pickedDateWithoutTime = DateTime(
-                                  pickedDate.year,
-                                  pickedDate.month,
-                                  pickedDate.day);
-                              DateTime startDate = DateFormat('dd-MM-yyyy')
-                                  .parse(start_date.text);
-
-                              if (pickedDateWithoutTime
-                                      .isAfter(currentDateWithoutTime) ||
-                                  pickedDateWithoutTime.isAtSameMomentAs(
-                                      currentDateWithoutTime)) {
-                                //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-                                //     setState(() {
-                                //   String formattedDate =
-                                //       DateFormat('dd-MM-yyyy')
-                                //           .format(pickedDate);
-                                //   deadline_date.text = formattedDate;
-                                // });
-                                int starttimenew = int.parse(
-                                    start_time.text.split(":")[0] +
-                                        start_time.text.split(":")[1]);
-                                int endtimenew = int.parse(
-                                    end_time.text.split(":")[0] +
-                                        end_time.text.split(":")[1]);
-
-                                if (pickedDateWithoutTime.isAfter(startDate) ||
-                                    (pickedDateWithoutTime
-                                            .isAtSameMomentAs(startDate) &&
-                                        starttimenew < endtimenew)) {
-                                  setState(() {
-                                    String formattedDate =
-                                        DateFormat('dd-MM-yyyy')
-                                            .format(pickedDate);
-                                    deadline_date.text = formattedDate;
-                                  });
-                                } else {
-                                  print("helllo1111");
-                                  // Display an error message for invalid end date
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text('Invalid End Date',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        content: Text(
-                                            'Please select the correct date.',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('OK',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins')),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              } else {
-                                // Display an error message or take appropriate action
+                              if (pickedTime.hour < currentTimeOfDay.hour ||
+                                  (pickedTime.hour == currentTimeOfDay.hour &&
+                                      pickedTime.minute <
+                                          currentTimeOfDay.minute)) {
+                                // Show error dialog
                                 showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Text('Invalid Date',
+                                      title: Text('Invalid Time',
                                           style:
                                               TextStyle(fontFamily: 'Poppins')),
                                       content: Text(
-                                          'Please select the correct date.',
+                                          'Please select the correct time.',
                                           style:
                                               TextStyle(fontFamily: 'Poppins')),
                                       actions: [
@@ -915,59 +1080,7 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
                                     );
                                   },
                                 );
-                              }
-                            } else {}
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                          width:
-                              16.0), // Adjust the spacing between the text fields
-                      Flexible(
-                        child: TextField(
-                          controller:
-                              end_time, //editing controller of this TextField
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.timer),
-                            labelText: 'End Time',
-                            labelStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Colors.grey, // Change the label color here
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .grey), // Change the bottom line color here
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .blue), // Change the focused bottom line color here
-                            ),
-                          ),
-                          readOnly:
-                              true, //set it true, so that user will not able to edit text
-                          onTap: () async {
-                            DateFormat dateFormat = DateFormat(
-                                'dd-MM-yyyy'); // Format for the start date
-
-                            DateTime selectedStartDate =
-                                start_date.text.isNotEmpty
-                                    ? dateFormat.parse(start_date.text)
-                                    : DateTime(0);
-                            DateTime selectedendtDate =
-                                deadline_date.text.isNotEmpty
-                                    ? dateFormat.parse(deadline_date.text)
-                                    : DateTime(0);
-
-                            if (selectedendtDate.isAfter(selectedStartDate)) {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                initialTime: TimeOfDay.now(),
-                                context: context,
-                              );
-                              if (pickedTime != null) {
-                                DateTime now = DateTime.now();
-
+                              } else {
                                 String formattedTime =
                                     DateFormat('HH:mm:ss').format(
                                   DateTime(now.year, now.month, now.day,
@@ -983,381 +1096,298 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
                                 });
                               }
                             } else {
-                              TimeOfDay? pickedTime = await showTimePicker(
-                                initialTime: TimeOfDay.now(),
-                                context: context,
-                              );
-                              if (pickedTime != null) {
-                                DateTime now = DateTime.now();
-                                TimeOfDay currentTimeOfDay =
-                                    TimeOfDay.fromDateTime(now);
-
-                                if (pickedTime.hour < currentTimeOfDay.hour ||
-                                    (pickedTime.hour == currentTimeOfDay.hour &&
-                                        pickedTime.minute <
-                                            currentTimeOfDay.minute)) {
-                                  // Show error dialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text('Invalid Time',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        content: Text(
-                                            'Please select the correct time.',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('OK',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins')),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  String formattedTime =
-                                      DateFormat('HH:mm:ss').format(
-                                    DateTime(now.year, now.month, now.day,
-                                        pickedTime.hour, pickedTime.minute),
-                                  );
-
-                                  // Delay the execution of setState
-                                  //   // Delay the execution of setState
-                                  Future.delayed(Duration.zero, () {
-                                    setState(() {
-                                      end_time.text = formattedTime;
-                                    });
-                                  });
-                                }
-                              } else {
-                                print("Time is not selected");
-                              }
+                              print("Time is not selected");
                             }
+                          }
 
-                            // if (pickedTime != null) {
-                            // DateTime now = DateTime.now();
-                            // TimeOfDay currentTimeOfDay = TimeOfDay.fromDateTime(now);
+                          // if (pickedTime != null) {
+                          // DateTime now = DateTime.now();
+                          // TimeOfDay currentTimeOfDay = TimeOfDay.fromDateTime(now);
 
-                            // if (pickedTime.hour < currentTimeOfDay.hour ||
-                            //     (pickedTime.hour == currentTimeOfDay.hour && pickedTime.minute < currentTimeOfDay.minute)) {
-                            //   // Show error dialog
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return AlertDialog(
-                            //         title: Text('Invalid Time', style: TextStyle(fontFamily: 'Poppins')),
-                            //         content: Text('Please select the correct time.', style: TextStyle(fontFamily: 'Poppins')),
-                            //         actions: [
-                            //           TextButton(
-                            //             onPressed: () {
-                            //               Navigator.pop(context);
-                            //             },
-                            //             child: Text('OK', style: TextStyle(fontFamily: 'Poppins')),
-                            //           ),
-                            //         ],
-                            //       );
-                            //     },
-                            //   );
-                            // }else{
-                            //       DateTime parsedTime = DateFormat.jm()
-                            //      .parse(pickedTime.format(context).toString());
-                            //                   String formattedTime =
-                            //     DateFormat('HH:mm:ss').format(parsedTime);
-                            //   setState(() {
-                            //   end_time.text =
-                            //       formattedTime; //set the value of text field.
-                            // });
-                            //                 }
+                          // if (pickedTime.hour < currentTimeOfDay.hour ||
+                          //     (pickedTime.hour == currentTimeOfDay.hour && pickedTime.minute < currentTimeOfDay.minute)) {
+                          //   // Show error dialog
+                          //   showDialog(
+                          //     context: context,
+                          //     builder: (context) {
+                          //       return AlertDialog(
+                          //         title: Text('Invalid Time', style: TextStyle(fontFamily: 'Poppins')),
+                          //         content: Text('Please select the correct time.', style: TextStyle(fontFamily: 'Poppins')),
+                          //         actions: [
+                          //           TextButton(
+                          //             onPressed: () {
+                          //               Navigator.pop(context);
+                          //             },
+                          //             child: Text('OK', style: TextStyle(fontFamily: 'Poppins')),
+                          //           ),
+                          //         ],
+                          //       );
+                          //     },
+                          //   );
+                          // }else{
+                          //       DateTime parsedTime = DateFormat.jm()
+                          //      .parse(pickedTime.format(context).toString());
+                          //                   String formattedTime =
+                          //     DateFormat('HH:mm:ss').format(parsedTime);
+                          //   setState(() {
+                          //   end_time.text =
+                          //       formattedTime; //set the value of text field.
+                          // });
+                          //                 }
 
-                            //               } else {
+                          //               } else {
 
-                            //               }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                  Row(children: [
-                    const Flexible(
-                      child: Text(
-                        ' Select Assign  :',
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
+                          //               }
+                        },
                       ),
                     ),
-                    const SizedBox(width: 16.0),
-                  ]),
-
-                  const SizedBox(height: 16.0),
-                  DropdownSearch<dynamic>(
-                    // mode: Mode.DIALOG,
-                    // label: "Select Category",
-                    // showSearchBox: true,
-                    //showSelectedItem: true,
-                    items: stateType,
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        _selectedValue = value;
-                      });
-                    },
-                    selectedItem: _selectedValue,
                   ),
-                  const SizedBox(height: 16.0),
-
-                  //SizedBox(height: 10.0),
-                  // imageee != null
-                  //     ? Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal: 20),
-                  //         child: ClipRRect(
-                  //           borderRadius: BorderRadius.circular(8),
-                  //           child: Image.file(
-                  //             //to show image, you type like this.
-                  //             File(imageee!.path),
-                  //             fit: BoxFit.cover,
-                  //             width: MediaQuery.of(context).size.width,
-                  //             height: 150,
-                  //           ),
-                  //         ),
-                  //       )
-                  //     : SizedBox(height: 10),
-                  // imageee != null
-                  //     ? //Text(path.basename(imageee!.path))
-                  //     Text(''): Text(''),
-                  Row(
-                    children: [
-                      const Flexible(
-                        child: Text(
-                          'Audio  :  ',
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
-                        ),
-                      ),
-                      const SizedBox(
-                          width:
-                              10.0), // Adjust the spacing between the text fields
-                      Flexible(
-                        child: audio != ''
-                            ? ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(
-                                      0xFFFFD700), // Set the button color to purple
-                                ),
-                                onPressed: () {
-                                  String audioUrl = '$audiourl';
-                                  playAudio(audioUrl);
-                                },
-                                child: Text(
-                                  'Play',
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 13.0,
-                                      color: AppString.appgraycolor),
-                                ),
-                              )
-                            : SizedBox(),
-                      ),
-                      const SizedBox(
-                          width:
-                              5.0), // Adjust the spacing between the text fields
-                      Flexible(
-                        child: audio != ''
-                            ? ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(
-                                        0xFFFFD700) // Set the button color to purple
-                                    ),
-                                onPressed: () {
-                                  pauseAudio();
-                                },
-                                child: Text('Stop Audio',
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 13.0,
-                                        color: AppString.appgraycolor)),
-                              )
-                            : SizedBox(),
-                      ),
-                    ],
+                ],
+              ),
+              SizedBox(height: 4.h),
+              Row(children: [
+                Flexible(
+                  child: Text(
+                    ' Select Assign  :',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11.5.sp),
                   ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Color(0xFFFFD700), // Set the button color to purple
+                ),
+                // const SizedBox(width: 16.0),
+              ]),
+              SizedBox(height: 2.0.h),
+              DropdownSearch<dynamic>(
+                // mode: Mode.DIALOG,
+                // label: "Select Category",
+                // showSearchBox: true,
+                //showSelectedItem: true,
+                items: stateType,
+                onChanged: (dynamic value) {
+                  setState(() {
+                    _selectedValue = value;
+                  });
+                },
+                selectedItem: _selectedValue,
+              ),
+              SizedBox(height: 2.0.h),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Audio  :  ',
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11.5.sp),
                     ),
-                    //onPressed: requestStoragePermission,
-                    onPressed: () {
-                      //myAudio();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EditRecord(id: '$id', task: '$task'),
-                        ),
-                      );
-                    },
-                    child: const Text('Upload Audio',
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: AppString.appgraycolor)),
                   ),
-                  SizedBox(height: 16),
-                  _selectedAudio != null
-                      ? Text(path.basename(_selectedAudio!.path),
-                          style: TextStyle(fontFamily: 'Poppins'))
-                      : audioo != false && audioo != null
-                          ? Text(path.basename(audioo.toString()),
-                              style: TextStyle(fontFamily: 'Poppins'))
-                          : const Text(''),
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      const Flexible(
-                        child: Text(
-                          'Image  :  ',
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
-                        ),
-                      ),
-                      const SizedBox(
-                          width:
-                              16.0), // Adjust the spacing between the text fields
-                      Flexible(
-                        child: GestureDetector(
-                            onTap: () {
-                              if (imageUrl != null) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: Image.network(imageUrl!),
-                                    );
-                                  },
-                                );
-                              }
+                  SizedBox(
+                      width: 5.w), // Adjust the spacing between the text fields
+                  Flexible(
+                    child: audio != ''
+                        ? ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(
+                                  0xff7c81dd), // Set the button color to purple
+                            ),
+                            onPressed: () {
+                              String audioUrl = '$audiourl';
+                              playAudio(audioUrl);
                             },
-                            child: imageee == null
-                                ? Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: imageUrl != null
-                                        ? Image.network(
-                                            imageUrl!,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Icon(
-                                            Icons.image,
-                                            size: 48,
-                                            color: Colors.white,
-                                          ))
-                                : Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.file(
-                                        //to show image, you type like this.
-                                        File(imageee!.path),
-                                        fit: BoxFit.cover,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 150,
-                                      ),
-                                    ))),
-                      ),
-                    ],
+                            child: Text(
+                              'Play',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 13.0,
+                                  color: Colors.white),
+                            ),
+                          )
+                        : SizedBox(),
                   ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Color(0xFFFFD700), // Set the button color to purple
+                  SizedBox(
+                      width: 5.0), // Adjust the spacing between the text fields
+                  Flexible(
+                    child: audio != ''
+                        ? ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(
+                                    0xFFFFD700)
+                                ),
+                            onPressed: () {
+                              pauseAudio();
+                            },
+                            child: Text('Stop Audio',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 13.0,
+                                    color: AppString.appgraycolor)),
+                          )
+                        : SizedBox(),
+                  ),
+                ],
+              ),
+              SizedBox(height: 2.h),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Color(0xff7c81dd) // Set the button color to purple
                     ),
-                    onPressed: () {
-                      myAlert();
-                    },
-                    child: Text('Upload Photo',
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: AppString.appgraycolor)),
+                //onPressed: requestStoragePermission,
+                onPressed: () {
+                  //myAudio();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditRecord(id: '$id', task: '$task'),
+                    ),
+                  );
+                },
+                child: const Text('Upload Audio',
+                    style:
+                        TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+              ),
+              //SizedBox(height: 2.h),
+              _selectedAudio != null
+                  ? Text(path.basename(_selectedAudio!.path),
+                      style: TextStyle(fontFamily: 'Poppins'))
+                  : audioo != false && audioo != null
+                      ? Text(path.basename(audioo.toString()),
+                          style: TextStyle(fontFamily: 'Poppins'))
+                      : const Text(''),
+              // SizedBox(height: 1.5.h),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Image  :  ',
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11.5.sp),
+                    ),
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color(0xFFFFD700), // Set the button color to purple
-                      ),
-                      child: Text('Save',
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: AppString.appgraycolor)),
-                      onPressed: () {
-                        updatedata(titlee.text, start_date.text,
-                            deadline_date.text, start_time.text, end_time.text);
-                        titlee.clear();
-                        start_date.clear();
-                        deadline_date.clear();
-                        start_time.clear();
-                        end_time.clear();
-                        task == 'all'
+                  SizedBox(
+                      width: 5.w), // Adjust the spacing between the text fields
+                  Flexible(
+                    child: GestureDetector(
+                        onTap: () {
+                          if (imageUrl != null) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Image.network(imageUrl!),
+                                );
+                              },
+                            );
+                          }
+                        },
+                        child: imageee == null
+                            ? Container(
+                                width: 65.w,
+                                height: 25.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: imageUrl != null
+                                    ? Image.network(
+                                        imageUrl!,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Icon(
+                                        Icons.image,
+                                        size: 48,
+                                        color: Colors.white,
+                                      ))
+                            : Container(
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.file(
+                                    //to show image, you type like this.
+                                    File(imageee!.path),
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 150,
+                                  ),
+                                ))),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Color(0xff7c81dd), // Set the button color to purple
+                ),
+                onPressed: () {
+                  myAlert();
+                },
+                child: Text('Upload Photo',
+                    style:
+                        TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Color(0xff7c81dd), // Set the button color to purple
+                  ),
+                  child: Text('Save',
+                      style: TextStyle(
+                          fontFamily: 'Poppins', color: Colors.white)),
+                  onPressed: () {
+                    updatedata(titlee.text, start_date.text, deadline_date.text,
+                        start_time.text, end_time.text);
+                    titlee.clear();
+                    start_date.clear();
+                    deadline_date.clear();
+                    start_time.clear();
+                    end_time.clear();
+                    task == 'all'
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DashBoard(
+                                  admin_type: admintype ??
+                                      ''), // Provide a default value if admintype is null
+                            ),
+                          )
+                        : task == 'completed'
                             ? Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DashBoard(
-                                      admin_type: admintype ??
-                                          ''), // Provide a default value if admintype is null
+                                  builder: (context) => CompletedTask(
+                                      admin_type:
+                                          '$admintype'), // Provide a default value if admintype is null
                                 ),
                               )
-                            : task == 'completed'
+                            : task == 'receive'
                                 ? Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => CompletedTask(
+                                      builder: (context) => ReceiveTask(
                                           admin_type:
                                               '$admintype'), // Provide a default value if admintype is null
                                     ),
                                   )
-                                : task == 'receive'
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ReceiveTask(
-                                              admin_type:
-                                                  '$admintype'), // Provide a default value if admintype is null
-                                        ),
-                                      )
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SendTask(
-                                              admin_type: '$admintype'),
-                                        ),
-                                      );
-                      }),
-                ],
-              ),
-            ),
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SendTask(admin_type: '$admintype'),
+                                    ),
+                                  );
+                  }),
+            ],
           ),
         ),
       ),

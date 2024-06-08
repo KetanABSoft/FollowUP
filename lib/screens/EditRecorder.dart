@@ -9,6 +9,7 @@ import 'package:followup/constant/conurl.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uuid/uuid.dart';
 
 import 'EditTask.dart';
@@ -110,51 +111,34 @@ class _EditRecordState extends State<EditRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor:Colors.white,
       //appBar: AppBar(title: Text('Audio Recording and Playing')),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFD700),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(0, 2),
-              ),
-            ],
+      appBar: AppBar(
+        backgroundColor: Color(0xff8155BA),
+        elevation: 0,
+        title:  Text(
+          'Record Audio',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
           ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Text(
-              'Record Audio',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: AppString.appgraycolor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppString.appgraycolor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Edit(
-                        id: '$id', task: '$task', audiopath: '', backto: ''),
-                  ),
-                );
-              },
-            ),
-          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => DashboardScreen(),
+            //   ),
+            // );
+            //Get.to(DashboardScreen());
+          },
         ),
       ),
       body: Center(
@@ -162,48 +146,94 @@ class _EditRecordState extends State<EditRecord> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 40,
+              height: 10.h,
             ),
             Container(
               child: Center(
                 child: Text(
                   _getFormattedTime(),
-                  style: TextStyle(fontSize: 70, color: Colors.red),
+                  style: TextStyle(fontSize: 50.sp, color: Colors.red),
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 3.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                createElevatedButton(
-                  icon: Icons.mic,
-                  iconColor: Colors.red,
-                  onPressFunc: () async {
+                // createElevatedButton(
+                //   icon: Icons.mic,
+                //   iconColor: Colors.red,
+                //   onPressFunc: () async {
+                //     startRecord();
+                //   },
+                // ),
+                GestureDetector(
+                  onTap: (){
                     startRecord();
                   },
+                  child: Container(
+                    height: 6.h,
+                    width: 24.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.deepPurple,width: 2),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Icon(Icons.mic,size: 25.sp,color: Colors.red,),
+                  ),
                 ),
                 SizedBox(
-                  width: 30,
+                  width: 12.w,
                 ),
-                createElevatedButton(
-                    icon: Icons.stop,
-                    iconColor: Colors.red,
-                    onPressFunc: () {
-                      stopRecord();
-                    }),
+                // createElevatedButton(
+                //     icon: Icons.stop,
+                //     iconColor: Colors.red,
+                //     onPressFunc: () {
+                //       stopRecord();
+                //     }),
+                GestureDetector(
+                  onTap: (){
+                    stopRecord();
+                  },
+                  child: Container(
+                    height: 6.h,
+                    width: 24.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.deepPurple,width: 2),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Icon(Icons.stop,size: 25.sp,color: Colors.red,),
+                  ),
+                ),
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 5.h,
             ),
-            ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(elevation: 9.0, backgroundColor: Colors.red),
-              child: Text('Upload'),
-              onPressed: () async {
+            // ElevatedButton(
+            //   style:
+            //       ElevatedButton.styleFrom(elevation: 9.0, backgroundColor: Colors.red),
+            //   child: Text('Upload'),
+            //   onPressed: () async {
+            //     stopRecord();
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => Edit(
+            //             id: '$id',
+            //             task: '$task',
+            //             audiopath: recordFilePath,
+            //             backto: ''), // Pass audioPath here
+            //       ),
+            //     );
+            //   },
+            // ),
+
+            GestureDetector(
+              onTap: (){
                 stopRecord();
                 Navigator.push(
                   context,
@@ -216,6 +246,16 @@ class _EditRecordState extends State<EditRecord> {
                   ),
                 );
               },
+              child: Container(
+                height: 6.h,
+                width: 30.w,
+                decoration: BoxDecoration(
+                    color:Color(0xff7c81dd),
+                    // border: Border.all(color: Colors.red,width: 2),
+                    borderRadius: BorderRadius.circular(15)
+                ),
+                child: Center(child: Text("Update",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 18.sp),)),
+              ),
             ),
           ],
         ),

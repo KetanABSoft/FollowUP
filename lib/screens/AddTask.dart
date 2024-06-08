@@ -1092,7 +1092,7 @@ class _AddTaskState extends State<AddTask> {
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.timer,
-                                  size: 25,
+                                  size: 20.sp,
                                 ),
                                 labelText: 'Start Time',
                                 labelStyle: TextStyle(
@@ -1254,7 +1254,7 @@ class _AddTaskState extends State<AddTask> {
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.timer,
-                                  size: 25,
+                                  size: 25.sp,
                                 ),
                                 labelText: 'End Time',
                                 labelStyle: TextStyle(
@@ -1691,158 +1691,6 @@ class _AddTaskState extends State<AddTask> {
                             ),
                           ),
                         ),
-                        // Expanded(
-                        //   child: Container(
-                        //     height: 5.5.h,
-                        //     width: 45.w,
-                        //     child: TextField(
-                        //       controller: reminderendtime,
-                        //       decoration: const InputDecoration(
-                        //         // icon: Icon(Icons.timer,size: 25,),
-                        //         labelText: 'Reminder End Time',
-                        //         labelStyle: TextStyle(
-                        //           fontFamily: 'Poppins',
-                        //           color: Colors.black,
-                        //         ),
-                        //         border: OutlineInputBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //             topLeft: Radius.circular(7),
-                        //             topRight: Radius.circular(7),
-                        //             bottomLeft: Radius.circular(7),
-                        //             bottomRight: Radius.circular(7),
-                        //           ),
-                        //         ),
-                        //         focusedBorder: OutlineInputBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //             topLeft: Radius.circular(7),
-                        //             topRight: Radius.circular(7),
-                        //             bottomLeft: Radius.circular(7),
-                        //             bottomRight: Radius.circular(7),
-                        //           ),
-                        //         ),
-                        //         enabledBorder: OutlineInputBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //             topLeft: Radius.circular(7),
-                        //             topRight: Radius.circular(7),
-                        //             bottomLeft: Radius.circular(7),
-                        //             bottomRight: Radius.circular(7),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       readOnly: true,
-                        //       onTap: () async {
-                        //         SharedPreferences prefs = await SharedPreferences.getInstance();
-                        //         String? storedEndTime = prefs.getString('endTime');
-                        //         DateTime? selectedEndTime;
-                        //
-                        //         if (storedEndTime != null) {
-                        //           selectedEndTime = DateFormat('HH:mm:ss').parse(storedEndTime);
-                        //         } else {
-                        //           // Handle the case where endTime is not set in SharedPreferences
-                        //           print("No end time set in SharedPreferences");
-                        //           return;
-                        //         }
-                        //
-                        //         DateTime now = DateTime.now();
-                        //         DateFormat dateFormat = DateFormat('dd-MM-yyyy');
-                        //
-                        //         DateTime selectedStartDate = startdate.text.isNotEmpty
-                        //             ? dateFormat.parse(startdate.text)
-                        //             : DateTime(0);
-                        //
-                        //         if (selectedStartDate.isAfter(DateTime(now.year, now.month, now.day))) {
-                        //           TimeOfDay? pickedTime = await showTimePicker(
-                        //             initialTime: TimeOfDay.now(),
-                        //             context: context,
-                        //           );
-                        //
-                        //           if (pickedTime != null) {
-                        //             DateTime selectedTime = DateTime(
-                        //                 now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
-                        //
-                        //             if (selectedTime.isAfter(selectedEndTime)) {
-                        //               showDialog(
-                        //                 context: context,
-                        //                 builder: (context) {
-                        //                   return AlertDialog(
-                        //                     title: Text('Invalid Time', style: TextStyle(fontFamily: 'Poppins')),
-                        //                     content: Text('Please select a time before the end time.', style: TextStyle(fontFamily: 'Poppins')),
-                        //                     actions: [
-                        //                       TextButton(
-                        //                         onPressed: () {
-                        //                           Navigator.pop(context);
-                        //                         },
-                        //                         child: Text('OK', style: TextStyle(fontFamily: 'Poppins')),
-                        //                       ),
-                        //                     ],
-                        //                   );
-                        //                 },
-                        //               );
-                        //             } else {
-                        //               String formattedTime = DateFormat('HH:mm:ss').format(selectedTime);
-                        //               String endTimenew = DateFormat('HH:mm:ss').format(
-                        //                 DateTime(selectedTime.year, selectedTime.month, selectedTime.day, pickedTime.hour + 1, pickedTime.minute),
-                        //               );
-                        //
-                        //               Future.delayed(Duration.zero, () {
-                        //                 setState(() {
-                        //                   starttime.text = formattedTime;
-                        //                   endtime.text = endTimenew;
-                        //                 });
-                        //               });
-                        //             }
-                        //           } else {
-                        //             print("Time is not selected");
-                        //           }
-                        //         } else {
-                        //           TimeOfDay? pickedTime = await showTimePicker(
-                        //             initialTime: TimeOfDay.now(),
-                        //             context: context,
-                        //           );
-                        //
-                        //           if (pickedTime != null) {
-                        //             DateTime selectedTime = DateTime(
-                        //                 now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
-                        //
-                        //             if (selectedTime.isAfter(selectedEndTime)) {
-                        //               showDialog(
-                        //                 context: context,
-                        //                 builder: (context) {
-                        //                   return AlertDialog(
-                        //                     title: Text('Invalid Time', style: TextStyle(fontFamily: 'Poppins')),
-                        //                     content: Text('Please select a time before the end time.', style: TextStyle(fontFamily: 'Poppins')),
-                        //                     actions: [
-                        //                       TextButton(
-                        //                         onPressed: () {
-                        //                           Navigator.pop(context);
-                        //                         },
-                        //                         child: Text('OK', style: TextStyle(fontFamily: 'Poppins')),
-                        //                       ),
-                        //                     ],
-                        //                   );
-                        //                 },
-                        //               );
-                        //             } else {
-                        //               String formattedTime = DateFormat('HH:mm:ss').format(selectedTime);
-                        //               String endTimenew = DateFormat('HH:mm:ss').format(
-                        //                 DateTime(selectedTime.year, selectedTime.month, selectedTime.day, pickedTime.hour + 1, pickedTime.minute),
-                        //               );
-                        //
-                        //               Future.delayed(Duration.zero, () {
-                        //                 setState(() {
-                        //                   starttime.text = formattedTime;
-                        //                   endtime.text = endTimenew;
-                        //                 });
-                        //               });
-                        //             }
-                        //           } else {
-                        //             print("Time is not selected");
-                        //           }
-                        //         }
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                     SizedBox(height: 4.h),
