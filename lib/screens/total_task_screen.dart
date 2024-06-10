@@ -1,19 +1,14 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'dashboard.dart';
 import 'dart:convert';
-
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/customListTile.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
 import 'package:intl/intl.dart';
 
 String? timer;
@@ -95,50 +90,14 @@ class Data {
   }
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      debugShowMaterialGrid: false,
-      home: ListScreen(admin_type: adminttype.toString())));
-}
-
-class ListScreen extends StatelessWidget {
+class TotalTask extends StatefulWidget {
   final String admin_type;
-
-  ListScreen({required this.admin_type});
-  // const ChatScreen({super.key});
-
-  // This widget is the root of your application.
+  const TotalTask({Key? key, required this.admin_type}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () async {
-          return true;
-        },
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          debugShowMaterialGrid: false,
-          title: 'Follow Up',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: DashBoard(admin_type: admin_type),
-        ));
-  }
+  State<TotalTask> createState() => _DashBoard();
 }
 
-class DashBoard extends StatefulWidget {
-  final String admin_type;
-
-  const DashBoard({Key? key, required this.admin_type}) : super(key: key);
-
-  @override
-  State<DashBoard> createState() => _DashBoard();
-}
-
-class _DashBoard extends State<DashBoard> {
+class _DashBoard extends State<TotalTask> {
   List<dynamic> dropdownItems = [];
   List<Data> data = [];
   dynamic selectedValue;
@@ -153,11 +112,7 @@ class _DashBoard extends State<DashBoard> {
   DateTime fromDate = DateTime.now();
   DateTime toDate = DateTime.now();
   DateTime date = DateTime.now();
-
-  //newdate = DateFormat('yyyy-MM-dd').format(dateTime);
   TimeOfDay time = TimeOfDay.now();
-
-  final _formKey = GlobalKey<FormState>();
   var dropdownvalue;
 
   Future<void> fetchDropdownData() async {
@@ -165,7 +120,6 @@ class _DashBoard extends State<DashBoard> {
     userid = preferences.getString('id');
     cmpid = preferences.getString('cmpid');
     adminttype = preferences.getString('admintype');
-    //String apiUrl = 'http://testfollowup.absoftwaresolution.in/getlist.php?Type=get_employee';
     String apiUrl = AppString.constanturl + 'get_employee';
     var response = await http.post(
       Uri.parse(apiUrl),
@@ -173,11 +127,6 @@ class _DashBoard extends State<DashBoard> {
     );
 
     if (response.statusCode == 200) {
-      // final jsonData = jsonDecode(response.body);
-      // setState(() {
-      //   dropdownItems = jsonData;
-      //   print(dropdownItems);
-
       List<dynamic> jsonData = jsonDecode(response.body);
       _sateMasterList = jsonData;
       for (int i = 0; i < _sateMasterList.length; i++) {
@@ -185,9 +134,6 @@ class _DashBoard extends State<DashBoard> {
         stateType.add(_sateMasterList[i]["firstname"]);
         setState(() {});
       }
-      // print('dropdownItems');
-      //_selectedValue = dropdownItems.isNotEmpty ? dropdownItems[0] : null;
-      //});
     } else {
       print(
           'Error fetching dropdown data. Status code: ${response.statusCode}');
@@ -200,7 +146,6 @@ class _DashBoard extends State<DashBoard> {
 
     fetchDropdownData();
     selectedValue = 'Select Employee';
-    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => setState((){}));
     fromDateController.text = DateFormat('dd-MM-yyyy').format(date);
     toDateController.text = DateFormat('dd-MM-yyyy').format(date);
   }
@@ -219,9 +164,7 @@ class _DashBoard extends State<DashBoard> {
         return true;
       },
       child: Scaffold(
-        // backgroundColor: Colors.grey,
         appBar: AppBar(
-          // backgroundColor: Color(0xff8155BA),
           backgroundColor: Color(0xff7c81dd),
           elevation: 0,
           title: Text(
@@ -238,12 +181,7 @@ class _DashBoard extends State<DashBoard> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DashboardScreen(),
-                ),
-              );
+              Get.to(DashboardScreen());
             },
           ),
         ),
@@ -255,8 +193,7 @@ class _DashBoard extends State<DashBoard> {
                 child: Column(
                   children: [
                     adminType == 'admin'
-                        ?
-                    Padding(
+                        ? Padding(
                             padding: EdgeInsets.all(8.0.sp),
                             child: Column(
                               children: [
@@ -331,18 +268,7 @@ class _DashBoard extends State<DashBoard> {
                                             firstDate: DateTime(1950),
                                             lastDate: DateTime(2100),
                                           );
-
-                                          // if (pickedDate != null) {
-                                          //     setState(() {
-                                          //       toDate = pickedDate;
-                                          //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
-                                          //     });
-                                          //   }
-
                                           if (pickedDate != null) {
-                                            // Check if pickedDate is after the current date
-
-                                            // Extract date components without time
                                             DateTime currentDateWithoutTime =
                                                 DateTime(
                                                     DateTime.now().year,
@@ -359,7 +285,6 @@ class _DashBoard extends State<DashBoard> {
                                                 pickedDateWithoutTime
                                                     .isAtSameMomentAs(
                                                         currentDateWithoutTime)) {
-                                              //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                               setState(() {
                                                 String formattedDate =
                                                     DateFormat('dd-MM-yyyy')
@@ -368,7 +293,6 @@ class _DashBoard extends State<DashBoard> {
                                                     formattedDate;
                                               });
                                             } else {
-                                              // Display an error message or take appropriate action
                                               showDialog(
                                                 context: context,
                                                 builder: (context) {
@@ -451,13 +375,10 @@ class _DashBoard extends State<DashBoard> {
                               ],
                             ),
                           )
-                        :
-                    Container(
-                      // color: Colors.grey,
-                      child:
-                      Column(
-                        children: [
-                          Padding (
+                        : Container(
+                            child: Column(
+                              children: [
+                                Padding(
                                   padding: EdgeInsets.only(
                                       top: 3.8.h, left: 12.sp, right: 12.sp),
                                   child: Row(
@@ -478,21 +399,24 @@ class _DashBoard extends State<DashBoard> {
                                                 color: Colors.black,
                                               ),
                                               border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
                                                 bottomRight: Radius.circular(7),
                                               )),
                                               focusedBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
                                                 bottomRight: Radius.circular(7),
                                               )),
                                               enabledBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
@@ -502,7 +426,8 @@ class _DashBoard extends State<DashBoard> {
                                             controller: fromDateController,
                                             readOnly: true,
                                             onTap: () async {
-                                              final pickedDate = await showDatePicker(
+                                              final pickedDate =
+                                                  await showDatePicker(
                                                 context: context,
                                                 initialDate: fromDate,
                                                 firstDate: DateTime(1950),
@@ -536,21 +461,24 @@ class _DashBoard extends State<DashBoard> {
                                                 color: Colors.black,
                                               ),
                                               border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
                                                 bottomRight: Radius.circular(7),
                                               )),
                                               focusedBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
                                                 bottomRight: Radius.circular(7),
                                               )),
                                               enabledBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.only(
+                                                  borderRadius:
+                                                      BorderRadius.only(
                                                 topLeft: Radius.circular(7),
                                                 topRight: Radius.circular(7),
                                                 bottomLeft: Radius.circular(7),
@@ -560,25 +488,16 @@ class _DashBoard extends State<DashBoard> {
                                             controller: toDateController,
                                             readOnly: true,
                                             onTap: () async {
-                                              final pickedDate = await showDatePicker(
+                                              final pickedDate =
+                                                  await showDatePicker(
                                                 context: context,
                                                 initialDate: toDate,
                                                 firstDate: DateTime(1950),
                                                 lastDate: DateTime(2100),
                                               );
-
-                                              // if (pickedDate != null) {
-                                              //     setState(() {
-                                              //       toDate = pickedDate;
-                                              //       toDateController.text = DateFormat('dd-MM-yyyy').format(toDate);
-                                              //     });
-                                              //   }
-
                                               if (pickedDate != null) {
-                                                // Check if pickedDate is after the current date
-
-                                                // Extract date components without time
-                                                DateTime currentDateWithoutTime =
+                                                DateTime
+                                                    currentDateWithoutTime =
                                                     DateTime(
                                                         DateTime.now().year,
                                                         DateTime.now().month,
@@ -594,7 +513,6 @@ class _DashBoard extends State<DashBoard> {
                                                     pickedDateWithoutTime
                                                         .isAtSameMomentAs(
                                                             currentDateWithoutTime)) {
-                                                  //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                                   setState(() {
                                                     String formattedDate =
                                                         DateFormat('dd-MM-yyyy')
@@ -603,12 +521,12 @@ class _DashBoard extends State<DashBoard> {
                                                         formattedDate;
                                                   });
                                                 } else {
-                                                  // Display an error message or take appropriate action
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
                                                       return AlertDialog(
-                                                        title: Text('Invalid Date',
+                                                        title: Text(
+                                                            'Invalid Date',
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins')),
@@ -620,7 +538,8 @@ class _DashBoard extends State<DashBoard> {
                                                         actions: [
                                                           TextButton(
                                                             onPressed: () {
-                                                              Navigator.pop(context);
+                                                              Navigator.pop(
+                                                                  context);
                                                             },
                                                             child: Text('OK',
                                                                 style: TextStyle(
@@ -632,9 +551,7 @@ class _DashBoard extends State<DashBoard> {
                                                     },
                                                   );
                                                 }
-                                              } else {
-
-                                              }
+                                              } else {}
                                             },
                                           ),
                                         ),
@@ -642,41 +559,42 @@ class _DashBoard extends State<DashBoard> {
                                     ],
                                   ),
                                 ),
-                          SizedBox(
-                            height: 3.8.h,
-                          ),
-                          Center(
-                            child: InkWell(
-                              onTap: () async {
-                                List<Data> dataList = await fetchData(
-                                    fromDate: fromDate,
-                                    toDate: toDate,
-                                    selectedValue: selectedId);
-                                setState(() {
-                                  data = dataList;
-                                });
-                              },
-                              child: Container(
-                                height: 4.5.h,
-                                width: 27.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.sp),
-                                  color: Color(0xff7c81dd),
+                                SizedBox(
+                                  height: 3.8.h,
                                 ),
-                                child: Center(
-                                    child: Text(
-                                      "Search",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                              ),
+                                Center(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      List<Data> dataList = await fetchData(
+                                          fromDate: fromDate,
+                                          toDate: toDate,
+                                          selectedValue: selectedId);
+                                      setState(() {
+                                        data = dataList;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 4.5.h,
+                                      width: 27.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(12.sp),
+                                        color: Color(0xff7c81dd),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        "Search",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 1.5.h,
                     ),

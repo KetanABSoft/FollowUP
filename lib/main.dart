@@ -33,12 +33,13 @@ void main() async {
       Sizer(
         builder: ( BuildContext buildContext , Orientation orientation , DeviceType deviceType)
         {
-          return MaterialApp(
+          return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: id == null ?  LoginScreen() : DashboardScreen(),
+            //home: id == null ?  LoginScreen() : DashboardScreen(),
+            initialRoute: AppPages.INITIAL_ROUTE,
+            getPages: AppPages.Pages,
           );
         },
-
       ));
 }
 
@@ -62,13 +63,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: textmyapp(),
+    return Sizer(
+      builder: ( BuildContext buildContext , Orientation orientation , DeviceType deviceType) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: textmyapp(),
+        );
+      }
     );
   }
 }
@@ -121,7 +126,6 @@ class textmyappnew extends State<textmyapp> {
           //home: const LoginScreen(),
         );
       },
-
     );
   }
 }

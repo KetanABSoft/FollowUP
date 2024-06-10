@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:followup/screens/dashboard.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -18,20 +18,20 @@ import 'package:sizer/sizer.dart';
 import 'Lead_list.dart';
 
 
-class LeadForm extends StatefulWidget {
+class CreateLead extends StatefulWidget {
   final String? id;
   final String? task;
 
-  LeadForm({required this.id, required this.task});
+  CreateLead({required this.id, required this.task});
 
   @override
-  State<LeadForm> createState() => _LeadFormState();
+  State<CreateLead> createState() => _CreateLeadState();
 }
 
 File? _selectedImage = null;
 final picker = ImagePicker();
 
-class _LeadFormState extends State<LeadForm> {
+class _CreateLeadState extends State<CreateLead> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController CustomerName = TextEditingController();
   TextEditingController CompanyName = TextEditingController();

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:followup/screens/AddTask.dart';
+import 'package:followup/screens/add_task.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'dart:async';
@@ -11,7 +11,7 @@ import 'package:record_mp3/record_mp3.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -267,14 +267,15 @@ class _MyAppState extends State<MyApp> {
             GestureDetector(
               onTap: (){
                 stopRecord();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TaskForm(
-                      audioPath: recordFilePath,
-                    ),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => TaskForm(
+                //       audioPath: recordFilePath,
+                //     ),
+                //   ),
+                // );
+                Get.to(AddTask(audioPath: recordFilePath,));
               },
               child: Container(
                 height: 6.h,

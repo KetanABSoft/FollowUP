@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
-import 'ListAll.dart';
+import 'total_task_screen.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import 'dashboard.dart';
@@ -117,7 +117,7 @@ class _ViewtaskState extends State<Viewtask> with WidgetsBindingObserver {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListScreen(
+        builder: (context) => TotalTask(
           admin_type: admintype.toString(),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:followup/widgets/list_of_notifications.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

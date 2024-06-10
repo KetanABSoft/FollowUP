@@ -3,36 +3,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:followup/screens/Taskincompleted.dart';
-import 'package:followup/constant/conurl.dart';
-import 'package:followup/screens/create_lead.dart';
+import 'package:followup/constant/string_constant.dart';
+import 'package:followup/screens/create_lead_screen.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
-import 'AddTask.dart';
-import 'ListAll.dart';
+import 'add_task.dart';
+import 'total_task_screen.dart';
 import 'Notifications_screen.dart';
 import 'OverdueTask.dart';
 import 'Profile.dart';
 import 'TaskCompleted.dart';
 import 'TaskReceive.dart';
 import 'TaskSend.dart';
-import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'notification_services.dart';
 
-
-// import 'package:followupnew/ListAll.dart';
-
-// import 'AddTask.dart';
-// import 'TaskCompleted.dart';
-// import 'TaskReceive.dart';
-// import 'TaskSend.dart';
-
-// void main() {
-//   runApp(TaskManagementApp());
-// }
 String? id;
 var mainid;
 String? userid;
@@ -48,7 +37,6 @@ bool _isExitConfirmed = false;
 
 Future fcmtoken() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //token = preferences.getString('token');
   admintype = preferences.getString('admintype');
   String? token = await FirebaseMessaging.instance.getToken();
 
@@ -58,24 +46,6 @@ Future fcmtoken() async {
   Uri uri = Uri.parse(urlString);
   var response = await http.post(uri,
       body: {"fcm_token": '$token', "admintype": '$admintype', "id": '$id'});
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //       print(message.toString());
-  //         try {
-  //   Map<String, dynamic> data = message.data;
-  //        notificationServices.showNotification(data);
-  //        print(data);
-  // } catch (e) {
-  //   print('Exception: $e');
-  // }
-  //    });
-  // notificationServices.showNotification();
-  runApp(DashboardScreen());
-  //runApp(const MyApp());
 }
 
 Future<bool> onWillPopnew(BuildContext context) async {
@@ -119,73 +89,6 @@ Future<bool> onWillPopnew(BuildContext context) async {
 
 NotificationServices notificationServices = NotificationServices();
 
-// class TaskManagementApp extends StatelessWidget {
-//   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-//   bool _isExitConfirmed = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-//     // Navigator.pop(context, 'true');
-//     _firebaseMessaging.requestPermission(
-//       alert: true,
-//       badge: true,
-//       sound: true,
-//     );
-
-//     // });
-//     _firebaseMessaging.getToken().then((token) async {
-//       SharedPreferences preferences = await SharedPreferences.getInstance();
-
-//       preferences.setString("token", '$token');
-//       //print(token);
-//     });
-//     return WillPopScope(
-//       onWillPop: () => _onWillPop(context),
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         home: DashboardScreen(),
-//       ),
-//     );
-//   }
-
-//   Future<bool> _onWillPop(BuildContext context) async {
-//     if (_isExitConfirmed) {
-//       return true; // Allow the app to exit
-//     } else {
-//       final confirmExit = await showDialog<bool>(
-//         context: context,
-//         builder: (context) {
-//           return AlertDialog(
-//             title: Text('Exit App', style: TextStyle(fontFamily: 'Poppins')),
-//             content: Text('Do you want to exit the app?',
-//                 style: TextStyle(fontFamily: 'Poppins')),
-//             actions: <Widget>[
-//               TextButton(
-//                 onPressed: () => Navigator.of(context).pop(false),
-//                 child: Text('No', style: TextStyle(fontFamily: 'Poppins')),
-//               ),
-//               TextButton(
-//                 onPressed: () {
-//                   _isExitConfirmed = true;
-//                   Navigator.of(context).pop(true);
-//                 },
-//                 child: Text('Yes', style: TextStyle(fontFamily: 'Poppins')),
-//               ),
-//             ],
-//           );
-//         },
-//       );
-
-//       if (confirmExit == true) {
-//         return true; // Allow the app to exit
-//       } else {
-//         return false; // Stay on the dashboard page
-//       }
-//     }
-//   }
-// }
-
 class DashboardScreen extends StatefulWidget {
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -204,16 +107,8 @@ class _DashboardScreenState extends State<DashboardScreen>
     notificationServices.firebaseInit();
     fetchcount();
     print(notificationCount);
-    //Navigator.pop(context);
-
-    setState(() {
-      // Navigator.of(context).pop();
-    });
     fetchlist();
     fcmtoken();
-
-    // onWillPop(context);
-    //timer = Timer.periodic(Duration(minutes: 11111), (_) => fetchlist());
   }
 
   dynamic jsonData;
@@ -282,12 +177,12 @@ class _DashboardScreenState extends State<DashboardScreen>
           taskData[2] = TaskData(
             taskName: 'Overdue',
             taskValue: doubleValue6.isFinite ? doubleValue6 : 0,
-            taskColor:   Colors.red.withOpacity(0.9),
+            taskColor: Colors.red.withOpacity(0.9),
           );
           taskData[3] = TaskData(
             taskName: 'Completed',
             taskValue: doubleValue2.isFinite ? doubleValue2 : 0,
-            taskColor:  Colors.green.withOpacity(0.9),
+            taskColor: Colors.green.withOpacity(0.9),
           );
           taskData[4] = TaskData(
             taskName: 'Send',
@@ -352,12 +247,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     TaskData(
       taskName: 'Overdue',
       taskValue: 0, // Use a placeholder or default value
-      taskColor:   Colors.red.withOpacity(0.9),
+      taskColor: Colors.red.withOpacity(0.9),
     ),
     TaskData(
       taskName: 'Completed',
       taskValue: 0, // Use a placeholder or default value
-      taskColor:   Colors.green.withOpacity(0.9),
+      taskColor: Colors.green.withOpacity(0.9),
     ),
     TaskData(
       taskName: 'Send',
@@ -379,15 +274,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     'Task Send',
     'Task Receive'
   ];
-  // final List<IconData> icons = [
-  //   Icons.task, // Total tasks icon
-  //   Icons.incomplete_circle, // Completed tasks icon
-  //   Icons.expand_more_outlined,
-  //   Icons.check, // Completed tasks icon
-  //   Icons.arrow_upward,
-  //   Icons.arrow_downward, // Received tasks icon
-  //   // Sent tasks icon
-  // ];
   final List<String> icons = [
     'assets/totaltask.png',
     'assets/Pendingtask.png',
@@ -405,21 +291,11 @@ class _DashboardScreenState extends State<DashboardScreen>
     Colors.orange,
   ];
   void _handleDashboard(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DashboardScreen(),
-      ),
-    );
+    Get.to(DashboardScreen());
   }
 
   void _handleProfile(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => profilemanagement(),
-      ),
-    );
+    Get.to(profilemanagement());
   }
 
   void _handleAddTask(BuildContext context) async {
@@ -431,30 +307,20 @@ class _DashboardScreenState extends State<DashboardScreen>
     preferences.remove('endtimeaudio');
     preferences.remove('picaudio');
     preferences.remove('selectedValues');
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TaskForm(audioPath: AppString.audiourl),
-      ),
-   );
-   // Get.to(TaskForm(audioPath: AppString.audiourl));
+    Get.to(AddTask(audioPath: AppString.audiourl));
   }
 
   void _handleAddLead(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LeadForm(id: '0', task: '')),
-    );
+    Get.to(CreateLead(id: "0", task: ''));
   }
 
   void _handleCard1Tap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListScreen(admin_type: admintype.toString()),
+        builder: (context) => TotalTask(admin_type: admintype.toString()),
       ),
-   );
+    );
   }
 
   void _handleNotifications(BuildContext context) async {
@@ -464,7 +330,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (context) =>
             NotificationScreen(admin_type: admintype.toString()),
       ),
-   );
+    );
   }
 
   void _handleCardincompltedTap() {
@@ -474,7 +340,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (context) =>
             Taskincompletednew(admin_type: admintype.toString()),
       ),
-   );
+    );
   }
 
   void handleoverduetask() {
@@ -492,7 +358,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       MaterialPageRoute(
         builder: (context) => CompletedTask(admin_type: admintype.toString()),
       ),
-   );
+    );
   }
 
   void _handleCard3Tap() {
@@ -501,7 +367,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       MaterialPageRoute(
         builder: (context) => ReceiveTask(admin_type: admintype.toString()),
       ),
-   );
+    );
   }
 
   void _handleCard4Tap() {
@@ -521,14 +387,15 @@ class _DashboardScreenState extends State<DashboardScreen>
         backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor:  Color(0xff7c81dd), // Set app bar background color to transparent
+          backgroundColor:
+              Color(0xff7c81dd), // Set app bar background color to transparent
           elevation: 0, // Remove app bar shadow
-          title:  Text(
+          title: Text(
             'Task Management',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Poppins',
-              color: Colors.white,// Set app bar text color to white
+              color: Colors.white, // Set app bar text color to white
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -536,14 +403,9 @@ class _DashboardScreenState extends State<DashboardScreen>
           centerTitle: true,
         ),
         body: Container(
-          padding: EdgeInsets.only(
-              top: 1.8.h, left: 12.sp, right: 12.sp),
+          padding: EdgeInsets.only(top: 1.8.h, left: 12.sp, right: 12.sp),
           child: Column(
             children: [
-              // Expanded(
-              //   flex: 1,
-              //   child: TaskManagementChart(data: taskData),
-              // ),
               Container(
                 height: 32.h, // Set the desired height for the chart
                 child: TaskManagementChart(data: taskData),
@@ -559,9 +421,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                             width: 8.w, // Adjust the width as needed
                             height: 5.h, // Adjust the height as needed
                             decoration: BoxDecoration(
-                              //color: Color.fromARGB(255, 238, 232, 232),
-                              borderRadius: BorderRadius.circular(
-                                  10.0.sp), // Adjust the border radius as needed
+                              borderRadius: BorderRadius.circular(10.0
+                                  .sp), // Adjust the border radius as needed
                             ),
                             child: Image.asset(
                               icons[index], // Use the icon path from the list

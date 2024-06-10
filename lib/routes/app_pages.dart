@@ -1,13 +1,13 @@
 import 'package:followup/binding/app_binding.dart';
 import 'package:followup/routes/route.dart';
-import 'package:followup/screens/AddTask.dart';
+import 'package:followup/screens/add_task.dart';
 import 'package:followup/screens/loginscreen.dart';
 import 'package:get/get.dart';
 import '../main.dart';
 import '../screens/EditRecorder.dart';
 import '../screens/EditTask.dart';
 import '../screens/Lead_list.dart';
-import '../screens/ListAll.dart';
+import '../screens/total_task_screen.dart';
 import '../screens/OverdueTask.dart';
 import '../screens/Profile.dart';
 import '../screens/Remark.dart';
@@ -17,14 +17,14 @@ import '../screens/TaskSend.dart';
 import '../screens/Taskincompleted.dart';
 import '../screens/Test.dart';
 import '../screens/ViewTask.dart';
-import '../screens/create_lead.dart';
+import '../screens/create_lead_screen.dart';
 import '../screens/dashboard.dart';
 import '../screens/login_screen.dart';
 import '../screens/viewNotification.dart';
 
 class AppPages
 {
-  static String INITIAL_ROUTE = Route.PROFILE_ROUTE;
+  static String INITIAL_ROUTE = Route.DASHBOARD_ROUTE;
 
   static final Pages =
   [
@@ -40,7 +40,7 @@ class AppPages
     ),
     GetPage(
         name: Route.CREATE_LEAD_ROUTE,
-        page: () => LeadForm(id: '', task: '',),
+        page: () => CreateLead(id: '', task: '',),
         binding:CreateLeadBinding()
     ),
     GetPage(
@@ -65,12 +65,12 @@ class AppPages
     ),
     GetPage(
         name: Route.LIST_ALL_ROUTE,
-        page: () => DashBoard(admin_type: '',),
+        page: () => TotalTask(admin_type: '',),
         binding:ListAllBinding()
     ),
     GetPage(
         name: Route.NOTIFICATION_SCREEN_ROUTE,
-        page: () => DashBoard(admin_type: '',),
+        page: () => TotalTask(admin_type: '',),
         binding:NotificationScreenBinding()
     ),
     GetPage(

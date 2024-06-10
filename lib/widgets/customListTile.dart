@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:followup/screens/EditTask.dart';
-import 'package:followup/screens/ListAll.dart';
+import 'package:followup/screens/total_task_screen.dart';
 import 'package:followup/screens/Remark.dart';
 import 'package:followup/screens/ViewTask.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:sizer/sizer.dart';
 // import 'package:followup/EditTask.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -341,7 +341,7 @@ class CustomListAll extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => ListScreen(
+                                            builder: (context) => TotalTask(
                                                 admin_type:
                                                     admintype.toString()),
                                           ),
@@ -378,7 +378,7 @@ class CustomListAll extends StatelessWidget {
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (context) =>
-                                                            ListScreen(
+                                                            TotalTask(
                                                                 admin_type:
                                                                     admintype
                                                                         .toString()),
@@ -509,7 +509,7 @@ class CustomListAll extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ListScreen(
+                                                        TotalTask(
                                                             admin_type: admintype
                                                                 .toString()),
                                                   ),
@@ -537,7 +537,7 @@ class CustomListAll extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ListScreen(
+                                        builder: (context) => TotalTask(
                                             admin_type: admintype.toString()),
                                       ),
                                     );

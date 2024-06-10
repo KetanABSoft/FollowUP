@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 
 import 'package:flutter/material.dart';
-import 'package:followup/screens/AddTask.dart';
+import 'package:followup/screens/add_task.dart';
 
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -20,7 +20,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
 
-import 'ListAll.dart';
+import 'total_task_screen.dart';
 import 'Notifications_screen.dart';
 
 
@@ -129,7 +129,7 @@ class _ViewnotificationState extends State<Viewnotification>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListScreen(
+        builder: (context) => TotalTask(
           admin_type: admintype.toString(),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:followup/constant/conurl.dart';
-import 'package:followup/screens/create_lead.dart';
+import 'package:followup/constant/string_constant.dart';
+import 'package:followup/screens/create_lead_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -214,7 +214,7 @@ class _LeadListState extends State<LeadList> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LeadForm(
+                                  builder: (context) => CreateLead(
                                     id: '${leads[index].id ?? ''}',
                                     task: 'view',
                                   ),
@@ -250,7 +250,7 @@ class _LeadListState extends State<LeadList> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => LeadForm(
+                                                builder: (context) => CreateLead(
                                                   id: '${leads[index].id ?? ''}',
                                                   task: 'view',
                                                 ),
@@ -265,7 +265,7 @@ class _LeadListState extends State<LeadList> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => LeadForm(
+                                                builder: (context) => CreateLead(
                                                   id: '${leads[index].id ?? ''}',
                                                   task: 'edit',
                                                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:followup/widgets/CustomListRemark.dart';
 
 import 'package:get/get.dart';
@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:followup/screens/ListAll.dart';
+import 'package:followup/screens/total_task_screen.dart';
 
 import 'dashboard.dart';
 

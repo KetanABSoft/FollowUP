@@ -5,7 +5,7 @@
 // import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:sizer/sizer.dart';
 // import 'package:validators/validators.dart';
-// import '../constant/conurl.dart';
+// import '../constant/string_constant.dart';
 // import 'dashboard.dart';
 //
 // String? token;
@@ -415,7 +415,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:validators/validators.dart';
-import '../constant/conurl.dart';
+import '../constant/string_constant.dart';
 import 'dashboard.dart';
 
 

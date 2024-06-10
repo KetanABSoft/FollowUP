@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:followup/screens/dashboard.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -301,7 +302,7 @@ class _Profile extends State<Profile> {
       appBar: AppBar(
         backgroundColor: Color(0xff8155BA),
         elevation: 0,
-        title:  Text(
+        title: Text(
           'Profile',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -313,11 +314,10 @@ class _Profile extends State<Profile> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color:Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-
-            Navigator.pop(context);
-
+            //Navigator.pop(context);
+            Get.back();
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(
@@ -325,13 +325,12 @@ class _Profile extends State<Profile> {
             //   ),
             // );
             //Get.to(DashboardScreen());
-
           },
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.all(11.sp),
+          padding: EdgeInsets.all(11.sp),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -351,7 +350,7 @@ class _Profile extends State<Profile> {
                   }
                 },
               ),
-               SizedBox(height: 3.h),
+              SizedBox(height: 3.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -362,10 +361,9 @@ class _Profile extends State<Profile> {
                     onPressed: selectAndUploadImage,
                     child: const Text('Change Profile Image',
                         style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white)),
+                            fontFamily: 'Poppins', color: Colors.white)),
                   ),
-                   SizedBox(width: 8.w),
+                  SizedBox(width: 8.w),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xff8155BA),
@@ -378,8 +376,7 @@ class _Profile extends State<Profile> {
                               style: TextStyle(fontFamily: 'Poppins')),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(context, 'Cancel'),
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
                               child: const Text('Cancel',
                                   style: TextStyle(fontFamily: 'Poppins')),
                             ),
@@ -397,8 +394,7 @@ class _Profile extends State<Profile> {
                     },
                     child: const Text('Log Out',
                         style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white)),
+                            fontFamily: 'Poppins', color: Colors.white)),
                   ),
                 ],
               ),
@@ -417,25 +413,25 @@ class _Profile extends State<Profile> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             labelText: 'New Password',
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins',
@@ -465,7 +461,9 @@ class _Profile extends State<Profile> {
                           },
                         ),
                       ),
-                      SizedBox(height: 3.h,),
+                      SizedBox(
+                        height: 3.h,
+                      ),
                       Container(
                         height: 5.5.h,
                         width: 85.w,
@@ -473,25 +471,25 @@ class _Profile extends State<Profile> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7),
-                                  topRight: Radius.circular(7),
-                                  bottomLeft: Radius.circular(7),
-                                  bottomRight: Radius.circular(7),
-                                )),
+                              topLeft: Radius.circular(7),
+                              topRight: Radius.circular(7),
+                              bottomLeft: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            )),
                             labelText: 'Confirm Password',
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins',
@@ -534,8 +532,7 @@ class _Profile extends State<Profile> {
                         },
                         child: const Text('Save',
                             style: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Colors.white)),
+                                fontFamily: 'Poppins', color: Colors.white)),
                       ),
                     ],
                   ),

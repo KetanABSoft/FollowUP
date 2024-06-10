@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:followup/screens/EditTask.dart';
-import 'package:followup/screens/ListAll.dart';
+import 'package:followup/screens/total_task_screen.dart';
 import 'package:followup/screens/Remark.dart';
 import 'package:followup/screens/Taskincompleted.dart';
 import 'package:followup/screens/ViewTask.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,15 +20,56 @@ import '../screens/TaskCompleted.dart';
 String? admintype;
 String? mainid;
 
-void launchWhatsApp(String phoneNumber, String message) async {
-  String whatsappUrl =
-      "whatsapp://send?phone=$phoneNumber" "&text=${Uri.encodeFull(message)}";
-  try {
-    await launch(whatsappUrl);
-  } catch (e) {
-    //handle error properly
-  }
-}
+// void launchWhatsApp(String phoneNumber, String message) async {
+//   String whatsappUrl =
+//       "whatsapp://send?phone=$phoneNumber" "&text=${Uri.encodeFull(message)}";
+//   try {
+//     await launch(whatsappUrl);
+//   } catch (e) {
+//     //handle error properly
+//   }
+// }
+//
+// void deletedata(String id) async {
+//   print(id);
+//   //var urlString = 'http://testfollowup.absoftwaresolution.in/getlist.php?Type=deletetask';
+//   var urlString = AppString.constanturl + 'deletetask';
+//   Uri uri = Uri.parse(urlString);
+//   var response = await http.post(uri, body: {"id": id});
+//   var jsondata = jsonDecode(response.body);
+//   print(jsondata);
+//   if (jsondata['success'] == "success") {
+//     Fluttertoast.showToast(
+//       backgroundColor: Color(0xff7c81dd),
+//       textColor: Colors.white,
+//       msg: jsondata['message'],
+//       toastLength: Toast.LENGTH_SHORT,
+//     );
+//   }
+// }
+//
+// void completetask(String id) async {
+//   SharedPreferences preferences = await SharedPreferences.getInstance();
+//   admintype = preferences.getString('admintype');
+//   mainid = preferences.getString('id');
+//   print(admintype);
+//   print('mainid');
+//   //var urlString = 'http://testfollowup.absoftwaresolution.in/getlist.php?Type=completetask';
+//   var urlString = AppString.constanturl + 'completetask';
+//   Uri uri = Uri.parse(urlString);
+//   var response = await http
+//       .post(uri, body: {"id": id, "mainid": mainid, "admintype": admintype});
+//   var jsondata = jsonDecode(response.body);
+//   print(jsondata);
+//   if (jsondata['success'] == "success") {
+//     Fluttertoast.showToast(
+//       backgroundColor: Color(0xff7c81dd),
+//       textColor: Colors.white,
+//       msg: jsondata['message'],
+//       toastLength: Toast.LENGTH_SHORT,
+//     );
+//   }
+// }
 
 void deletedata(String id) async {
   print(id);
@@ -68,6 +109,16 @@ void completetask(String id) async {
       msg: jsondata['message'],
       toastLength: Toast.LENGTH_SHORT,
     );
+  }
+}
+
+void launchWhatsApp(String phoneNumber, String message) async {
+  String whatsappUrl =
+      "whatsapp://send?phone=$phoneNumber" "&text=${Uri.encodeFull(message)}";
+  try {
+    await launch(whatsappUrl);
+  } catch (e) {
+    //handle error properly
   }
 }
 

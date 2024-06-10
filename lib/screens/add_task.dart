@@ -1,32 +1,23 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:followup/screens/EditTask.dart';
 import 'package:followup/screens/Recorder.dart';
-import 'package:followup/constant/conurl.dart';
-import 'package:http_parser/http_parser.dart';
+import 'package:followup/constant/string_constant.dart';
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:path/path.dart' as path;
-import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
-import 'ListAll.dart';
+import 'total_task_screen.dart';
 import 'dashboard.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
@@ -49,32 +40,11 @@ String? starttimeaudio;
 String? endtimeaudio;
 List<dynamic>? assigntoaudio;
 String? picaudio;
-//String ?formattedEndDate;
 String dropdowntext = 'Please select at least one assign';
 Timer? _toastTimer;
+
 var uuid = Uuid();
 var uniqueId = uuid.v1();
-
-class TaskForm extends StatelessWidget {
-  final String audioPath;
-  TaskForm({
-    Key? key,
-    required this.audioPath,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Follow Up',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: AddTask(
-        audioPath: audioPath,
-      ),
-    );
-  }
-}
 
 class AddTask extends StatefulWidget {
   final String audioPath;
@@ -134,7 +104,7 @@ class _AddTaskState extends State<AddTask> {
   Future<void> saveSelectedValuesToPrefs(List<dynamic> values) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     List<String> stringValues =
-    values.map((value) => value.toString()).toList();
+        values.map((value) => value.toString()).toList();
     await preferences.setStringList('selectedValues', stringValues);
   }
 
@@ -240,7 +210,6 @@ class _AddTaskState extends State<AddTask> {
       //var urlString = 'http://testfollowup.absoftwaresolution.in/getlist.php?Type=addtask';
       var urlString = AppString.constanturl + 'addtask';
       Uri uri = Uri.parse(urlString);
-
       var response = await http.post(uri, body: {
         "title": titlenew,
         "startdate": startdate,
@@ -257,7 +226,7 @@ class _AddTaskState extends State<AddTask> {
       if (jsonResponse is List) {
         // Handle the case when the response contains multiple IDs
         List<String> ids =
-        jsonResponse.map((item) => item['id'].toString()).toList();
+            jsonResponse.map((item) => item['id'].toString()).toList();
         for (int i = 0; i < ids.length; i++) {
           String id = ids[i];
           if (pic != '') {
@@ -280,7 +249,7 @@ class _AddTaskState extends State<AddTask> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ListScreen(
+            builder: (context) => TotalTask(
               admin_type: admintype.toString(),
             ),
           ),
@@ -314,13 +283,11 @@ class _AddTaskState extends State<AddTask> {
       } else {
         print('Invalid JSON response');
       }
-    } else {
-
-    }
+    } else {}
   }
 
   GlobalKey<FormFieldState<dynamic>> dropdown1Key =
-  GlobalKey<FormFieldState<dynamic>>();
+      GlobalKey<FormFieldState<dynamic>>();
   XFile? image;
   final ImagePicker picker = ImagePicker();
   dynamic selectedValue;
@@ -329,34 +296,14 @@ class _AddTaskState extends State<AddTask> {
   bool isLoading = false;
   List<dynamic> dropdownData = [];
   List<dynamic> selectedData = [];
-
-  // Future<void> requestStoragePermission() async {
-  //   PermissionStatus status = await Permission.storage.request();
-  //    if (await Permission.storage.request().isGranted) {
-  //     // Permission granted, you can proceed with accessing external storage
-  //     // For example, you can call a function to select and read audio files
-  //     _selectAudio();
-  //   } else if (await Permission.storage.request().isPermanentlyDenied) {
-
-  //   openAppSettings();
-  //       } else {
-  //         // The storage permission is denied, but not permanently
-  //         // You can show an explanation dialog and request the permission again
-  //         // Or you can choose to proceed without the permission
-  //       }
-
-  // }
-
   Future<void> requestStoragePermission() async {
     PermissionStatus status = await Permission.manageExternalStorage.request();
 
     if (status.isGranted) {
       print(' 1st denied');
-      // Permission granted, you can proceed with accessing both external and internal storage
       _selectAudio();
     } else if (status.isDenied) {
       print(' 2nd denied');
-      // Permission denied by the user, handle accordingly
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -373,52 +320,26 @@ class _AddTaskState extends State<AddTask> {
         ),
       );
     } else if (status.isPermanentlyDenied || status.isRestricted) {
-      // Permission permanently denied or restricted, open app settings to enable the permission
       _selectAudio();
-
-      // showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) => AlertDialog(
-      //     title: Text('Permission Denied'),
-      //     content: Text('Please open app settings and enable storage permission manually.'),
-      //     actions: <Widget>[
-      //       ElevatedButton(
-      //         child: Text('OK'),
-      //         onPressed: () {
-      //           Navigator.of(context).pop();
-      //           openAppSettings();
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // );
-
     }
   }
 
   Future<void> sendimage(List<String> ids) async {
     if (image != null) {
       print(image!.path);
-      // var uri = Uri.parse("http://testfollowup.absoftwaresolution.in/getlist.php?Type=addimage");
       var uri = Uri.parse(AppString.constanturl + "addimage");
-
       for (var id in ids) {
-        // print('iddddd: $id');
         print(uniqueId);
         var newuniq = uuid.v1();
         var request = http.MultipartRequest('POST', uri);
-
         var multipartFile = await http.MultipartFile.fromPath(
             'image', image!.path,
             filename: '${newuniq}_image.jpg');
-
         request.files.add(multipartFile);
         request.fields['id'] = id;
-
         await request.send().then((result) {
           http.Response.fromStream(result).then((response) async {
             final jsonData = jsonDecode(response.body);
-            // Handle the response data as needed
           });
         });
       }
@@ -427,45 +348,24 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
-  //we can upload image from camera or from gallery based on parameter
   Future sendImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
-    // if (mounted) {
-    //   // Check if the widget is still mounted
-    //   setState(() {
-    //     image = img;
-    //   });
-    // }
-
-    // if (img != null) {
-    //   pic = await http.MultipartFile.fromPath("image", img.path);
-
-    // }
-
     if (img != null) {
       XFile? compressedImage = await compressImage(XFile(img.path));
-
       setState(() {
-        // Update your state with the compressed image
         image = compressedImage;
       });
-
       if (compressedImage != null) {
         pic = await http.MultipartFile.fromPath("image", compressedImage.path);
-
-        // Continue with your HTTP request or other logic
       }
     }
   }
 
-
   Future<XFile?> compressImage(XFile file) async {
     final filePath = file.path;
-
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
     final splitted = filePath.substring(0, lastIndex);
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
-
     XFile? compressedFile = await FlutterImageCompress.compressAndGetFile(
       filePath,
       outPath,
@@ -473,7 +373,6 @@ class _AddTaskState extends State<AddTask> {
       minHeight: 1000,
       quality: 70,
     );
-
     return compressedFile;
   }
 
@@ -481,7 +380,6 @@ class _AddTaskState extends State<AddTask> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.audio,
     );
-
     if (result != null) {
       setState(() {
         _selectedAudio = File(result.files.single.path!);
@@ -489,23 +387,19 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
-
   Future<void> _uploadAudio(String id) async {
     print('_selectedAudio' + audioPath);
     String filePath = audioPath; // Replace with the actual file path
     File file = File(filePath);
-
     if (file.existsSync()) {
       int fileSizeInBytes = file.lengthSync();
       double fileSizeInKB = fileSizeInBytes / 1024; // Convert bytes to KB
-
       print('File Size: ${fileSizeInKB.toStringAsFixed(2)} KB');
     } else {
       print('File does not exist.');
     }
     if (_selectedAudio != null) {
       id = id;
-      //final url = Uri.parse('http://testfollowup.absoftwaresolution.in/getlist.php?Type=addaudio');
       final url = Uri.parse(AppString.constanturl + 'addaudio');
       var request = http.MultipartRequest('POST', url);
       request.files.add(
@@ -520,36 +414,22 @@ class _AddTaskState extends State<AddTask> {
     } else if (audioPath != null) {
       final url = Uri.parse(AppString.constanturl + 'addaudio');
       var request = http.MultipartRequest('POST', url);
-
-      // Open the audio file
       var file = File(audioPath);
       if (await file.exists()) {
-        // Create a new MultipartFile from the audio file
         var audio = await http.MultipartFile.fromPath('audio', file.path);
-
-        // Add the audio file to the request
         request.files.add(audio);
-
-        // Add other request fields as needed
         request.fields['id'] = id;
-
         try {
-          // Send the request and get the response
           var response = await request.send();
-
           if (response.statusCode == 200) {
-            // Audio uploaded successfully
             print('Audio uploaded successfully.');
           } else {
-            // Failed to upload audio
             print('Failed to upload audio. Error: ${response.reasonPhrase}');
           }
         } catch (e) {
-          // Exception occurred during the upload process
           print('Failed to upload audio. Error: $e');
         }
       } else {
-        // Audio file does not exist
         print('Audio file not found.');
       }
     } else {
@@ -563,32 +443,18 @@ class _AddTaskState extends State<AddTask> {
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             title: Text('Please choose media to select',
                 style: TextStyle(fontFamily: 'Poppins')),
             content: Container(
               height: MediaQuery.of(context).size.height / 6,
               child: Column(
                 children: [
-                  // ElevatedButton(
-                  //   //if user click this button, user can upload image from gallery
-                  //   onPressed: () {
-                  //     Navigator.pop(context);
-                  //     sendImage(ImageSource.gallery);
-                  //   },
-                  //   child: Row(
-                  //     children: [
-                  //       Icon(Icons.image),
-                  //       Text('From Gallery'),
-                  //     ],
-                  //   ),
-                  // ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                      Color(0xFFFFD700), // Set the button color to purple
+                          Color(0xFFFFD700), // Set the button color to purple
                     ),
-                    //if user click this button. user can upload image from camera
                     onPressed: () {
                       Navigator.pop(context);
                       sendImage(ImageSource.camera);
@@ -608,7 +474,7 @@ class _AddTaskState extends State<AddTask> {
             ),
           );
         });
-  }
+       }
 
   void myAudio() {
     showDialog(
@@ -622,18 +488,6 @@ class _AddTaskState extends State<AddTask> {
             height: MediaQuery.of(context).size.height / 6,
             child: Column(
               children: [
-                // ElevatedButton(
-                //   onPressed:()=>{
-                //     requestStoragePermission(),
-                //   Navigator.of(context).pop()},
-
-                //   child: Row(
-                //     children: [
-                //       Icon(Icons.audio_file),
-                //       Text('From Files'),
-                //     ],
-                //   ),
-                // ),
                 ElevatedButton(
                   onPressed: () {
                     // Handle audio recording
@@ -666,41 +520,26 @@ class _AddTaskState extends State<AddTask> {
     );
   }
 
-
-  //we can upload image from camera or from gallery based on parameter
-
-  //we can upload image from camera or from gallery based on parameter
-
   DateTime date = DateTime.now();
-
-  //newdate = DateFormat('yyyy-MM-dd').format(dateTime);
   TimeOfDay time = TimeOfDay.now();
-
   TextEditingController startdate = TextEditingController();
   TextEditingController reminderdate = TextEditingController();
   TextEditingController remindertime = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   var dropdownvalue;
   @override
   void dispose() {
-    // _timer?.cancel();
-
     super.dispose();
   }
-
-
   Future<void> fetchDropdownData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     userid = preferences.getString('id');
     cmpid = preferences.getString('cmpid');
     admintype = preferences.getString('admintype');
-    //String apiUrl = 'http://testfollowup.absoftwaresolution.in/getlist.php?Type=get_employee';
     String apiUrl = AppString.constanturl + 'get_employee';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {'id': userid, 'cmpid': cmpid, 'admintype': admintype},
     );
-
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       setState(() {
@@ -711,14 +550,7 @@ class _AddTaskState extends State<AddTask> {
           'Error fetching dropdown data. Status code: ${response.statusCode}');
     }
   }
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Widget MyLoaderWidget() {
-    return Center(
-      child: CircularProgressIndicator(), // or your preferred loader widget
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     String audioPath = widget.audioPath;
@@ -741,12 +573,7 @@ class _AddTaskState extends State<AddTask> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DashboardScreen(),
-              ),
-            );
+            Get.to(DashboardScreen());
           },
         ),
       ),
@@ -851,27 +678,21 @@ class _AddTaskState extends State<AddTask> {
                                       pickedDate.year,
                                       pickedDate.month,
                                       pickedDate.day);
-
                                   if (pickedDateWithoutTime
                                           .isAfter(currentDateWithoutTime) ||
                                       pickedDateWithoutTime.isAtSameMomentAs(
                                           currentDateWithoutTime)) {
                                     DateTime pickedStartDate = pickedDate;
-
                                     DateTime pickedEndDate = pickedStartDate;
-
                                     String formattedStartDate =
                                         DateFormat('dd-MM-yyyy')
                                             .format(pickedStartDate);
-
                                     String formattedEndDate =
                                         DateFormat('dd-MM-yyyy')
                                             .format(pickedEndDate);
-
                                     DateTime pickedEndDate2 =
                                         DateFormat('dd-MM-yyyy')
                                             .parse(deadlinedate.text);
-
                                     if (pickedEndDate2
                                         .isAfter(pickedStartDate)) {
                                       setState(() {
@@ -982,24 +803,17 @@ class _AddTaskState extends State<AddTask> {
                                   print(DateFormat('HH:mm:ss')
                                       .format(DateTime.now()));
 
-                                  // Check if pickedDate is after the curformattedTimerent date
                                   if (pickedDateWithoutTime
                                           .isAfter(currentDateWithoutTime) ||
                                       pickedDateWithoutTime.isAtSameMomentAs(
                                           currentDateWithoutTime)) {
-                                    // DateTime starttimenew=DateTime(int.parse(starttime.text));
                                     int starttimenew = int.parse(
                                         starttime.text.split(":")[0] +
                                             starttime.text.split(":")[1]);
                                     int endtimenew = int.parse(
                                         endtime.text.split(":")[0] +
                                             endtime.text.split(":")[1]);
-
-                                    // DateTime endtimenew=DateTime(int.parse(endtime.text));
-
                                     DateTime now = DateTime.now();
-
-                                    // Check if picked end date is after or equal to start date
                                     if (pickedDateWithoutTime
                                             .isAfter(startDate) ||
                                         (pickedDateWithoutTime
@@ -1144,8 +958,6 @@ class _AddTaskState extends State<AddTask> {
 
                                   if (pickedTime != null) {
                                     DateTime now = DateTime.now();
-
-                                    // Update the UI with the picked time
                                     String formattedTime =
                                         DateFormat('HH:mm:ss').format(
                                       DateTime(now.year, now.month, now.day,
@@ -1163,7 +975,7 @@ class _AddTaskState extends State<AddTask> {
                                     // Delay the execution of setState
                                     Future.delayed(Duration.zero, () {
                                       setState(() {
-                                        starttime.text  = formattedTime;
+                                        starttime.text = formattedTime;
                                       });
                                     });
                                     //}
@@ -1213,7 +1025,6 @@ class _AddTaskState extends State<AddTask> {
                                         },
                                       );
                                     } else {
-                                      // Update the UI with the picked time
                                       String formattedTime =
                                           DateFormat('HH:mm:ss').format(
                                         DateTime(now.year, now.month, now.day,
@@ -1229,10 +1040,9 @@ class _AddTaskState extends State<AddTask> {
                                             pickedTime.hour + 1,
                                             pickedTime.minute),
                                       );
-                                      // Delay the execution of setState
                                       Future.delayed(Duration.zero, () {
                                         setState(() {
-                                          starttime.text  = formattedTime;
+                                          starttime.text = formattedTime;
                                         });
                                       });
                                     }
@@ -1250,7 +1060,7 @@ class _AddTaskState extends State<AddTask> {
                             height: 5.5.h,
                             width: 45.w,
                             child: TextField(
-                              controller:endtime,
+                              controller: endtime,
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.timer,
@@ -1285,15 +1095,9 @@ class _AddTaskState extends State<AddTask> {
                               ),
                               readOnly: true,
                               onTap: () async {
-                                // TimeOfDay? pickedTime = await showTimePicker(
-                                //   initialTime: TimeOfDay.now(),
-                                //   context: context,
-                                // );
-
                                 DateTime now = DateTime.now();
                                 DateFormat dateFormat = DateFormat(
                                     'dd-MM-yyyy'); // Format for the start date
-
                                 DateTime selectedStartDate =
                                     startdate.text.isNotEmpty
                                         ? dateFormat.parse(startdate.text)
@@ -1319,10 +1123,6 @@ class _AddTaskState extends State<AddTask> {
                                       DateTime(now.year, now.month, now.day,
                                           pickedTime.hour, pickedTime.minute),
                                     );
-
-                                    // Delay the execution of setState
-                                    //   // Delay the execution of setState
-                                    //    Future.delayed(Duration.zero, () {
                                     setState(() {
                                       endtime.text = formattedTime;
                                     });
@@ -1331,7 +1131,6 @@ class _AddTaskState extends State<AddTask> {
                                         await SharedPreferences.getInstance();
                                     await prefs.setString(
                                         'endTime', formattedTime);
-                                    //  });
                                   }
                                 } else {
                                   TimeOfDay? pickedTime = await showTimePicker(
@@ -1359,7 +1158,6 @@ class _AddTaskState extends State<AddTask> {
                                                 currentTimeOfDay.hour &&
                                             pickedTime.minute <
                                                 currentTimeOfDay.minute))) {
-                                      // Show error dialog
                                       showDialog(
                                         context: context,
                                         builder: (context) {
@@ -1390,9 +1188,6 @@ class _AddTaskState extends State<AddTask> {
                                         DateTime(now.year, now.month, now.day,
                                             pickedTime.hour, pickedTime.minute),
                                       );
-
-                                      // Delay the execution of setState
-                                      //   // Delay the execution of setState
                                       Future.delayed(Duration.zero, () {
                                         setState(() {
                                           endtime.text = formattedTime;
@@ -1573,11 +1368,6 @@ class _AddTaskState extends State<AddTask> {
                               ),
                               readOnly: true,
                               onTap: () async {
-                                // TimeOfDay? pickedTime = await showTimePicker(
-                                //   initialTime: TimeOfDay.now(),
-                                //   context: context,
-                                // );
-
                                 DateTime now = DateTime.now();
                                 DateFormat dateFormat = DateFormat(
                                     'dd-MM-yyyy'); // Format for the start date
@@ -1606,9 +1396,6 @@ class _AddTaskState extends State<AddTask> {
                                       DateTime(now.year, now.month, now.day,
                                           pickedTime.hour, pickedTime.minute),
                                     );
-                                    // Delay the execution of setState
-                                    //   // Delay the execution of setState
-                                    //    Future.delayed(Duration.zero, () {
                                     setState(() {
                                       remindertime.text = formattedTime;
                                     });
@@ -1616,7 +1403,6 @@ class _AddTaskState extends State<AddTask> {
                                         await SharedPreferences.getInstance();
                                     await prefs.setString(
                                         'endTime', formattedTime);
-                                    //  });
                                   }
                                 } else {
                                   TimeOfDay? pickedTime = await showTimePicker(
@@ -1674,9 +1460,6 @@ class _AddTaskState extends State<AddTask> {
                                         DateTime(now.year, now.month, now.day,
                                             pickedTime.hour, pickedTime.minute),
                                       );
-
-                                      // Delay the execution of setState
-                                      //   // Delay the execution of setState
                                       Future.delayed(Duration.zero, () {
                                         setState(() {
                                           remindertime.text = formattedTime;
@@ -1737,7 +1520,6 @@ class _AddTaskState extends State<AddTask> {
                               backgroundColor: Color(0xff7c81dd),
                             ),
                             onPressed: () {
-                              //myAudio();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -1800,29 +1582,11 @@ class _AddTaskState extends State<AddTask> {
                         : SizedBox(
                             height: 0.h,
                           ),
-                    image != null
-                        ? //Text(path.basename(image!.path),style: TextStyle(fontFamily: 'Poppins'))
-                        Text('')
-                        : const Text(''),
+                    image != null ? Text('') : const Text(''),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff7c81dd),
                       ),
-
-                      // onPressed: isLoading
-                      //     ? null
-                      //     : () {
-
-                      //             savedata(
-                      //           title.text,
-                      //           startdate.text,
-                      //           deadlinedate.text,
-                      //           starttime.text,
-                      //           endtime.text,
-                      //         );
-
-                      //       },
-
                       onPressed: isButtonEnabled
                           ? null
                           : () {
@@ -1852,36 +1616,3 @@ class _AddTaskState extends State<AddTask> {
     );
   }
 }
-
-class TaskTextField extends StatelessWidget {
-  final String hintText;
-  final BorderRadius borderRadius;
-
-  const TaskTextField({
-    required this.hintText,
-    required this.borderRadius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: hintText,
-        filled: true,
-        fillColor: Colors.grey[200],
-        border: OutlineInputBorder(
-          borderRadius: borderRadius,
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      ),
-    );
-  }
-}
-
-// void main() {
-//   runApp(MaterialApp(
-//       home: TaskForm(
-//     audioPath: AppString.audiourl,
-//   )));
-// }

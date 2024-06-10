@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:followup/constant/conurl.dart';
+import 'package:followup/constant/string_constant.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -28,7 +28,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:sizer/sizer.dart';
 
 import 'EditRecorder.dart';
-import 'ListAll.dart';
+import 'total_task_screen.dart';
 import 'TaskCompleted.dart';
 import 'Recorder.dart';
 import 'TaskReceive.dart';
@@ -254,6 +254,7 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
   }
 
   Future<void> _uploadAudio(String id) async {
+
     // if (_selectedAudio != null) {
     //   id = id;
     //   //final url = Uri.parse('http://testfollowup.absoftwaresolution.in/getlist.php?Type=addaudio');
@@ -269,6 +270,7 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
     //     print('Failed to upload audio. Error: ${response.reasonPhrase}');
     //   }
     // } else
+
     if (audioo != '') {
       print(audioo);
       print('audioo');
@@ -1356,7 +1358,7 @@ class _EditState extends State<Edit> with WidgetsBindingObserver {
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DashBoard(
+                              builder: (context) => TotalTask(
                                   admin_type: admintype ??
                                       ''), // Provide a default value if admintype is null
                             ),
